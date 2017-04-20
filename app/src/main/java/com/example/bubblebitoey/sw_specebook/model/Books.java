@@ -24,4 +24,8 @@ public class Books {
 	public List getBooks() {
 		return books;
 	}
+
+	public void sort() {
+
+	}
 }

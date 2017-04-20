@@ -19,20 +19,22 @@ public class Book {
 	private String title;
 	private URL link;
 	private double price;
+	private String year;
 
-	public Book(String id, String title, String link, double price) {
+	public Book(String id, String title, String link, double price, String year) {
 		try {
 			this.id = id;
 			this.title = title;
 			this.link = new URL(link);
 			this.price = price;
+			this.year = year;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public Book(JSONObject object) throws JSONException {
-		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("prize"));
+		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("prize"), object.getString("pub_year"));
 	}
 
 	public String getId() {
@@ -78,5 +80,17 @@ public class Book {
 
 	public void setImage(Bitmap image) {
 		this.image = image;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public boolean isSameYear(Book b) {
+		return b.getYear().equals(this.getYear());
+	}
+
+	public boolean isSameTitle(Book b) {
+		return b.getTitle().equals(this.getTitle());
 	}
 }
