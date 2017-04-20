@@ -2,6 +2,8 @@ package com.example.bubblebitoey.sw_specebook.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,13 +14,13 @@ import java.net.URL;
  */
 
 public class Book {
-	private int id;
+	private String id;
 	private Bitmap image;
 	private String title;
 	private URL link;
 	private double price;
 
-	public Book(int id, String title, String link, double price) {
+	public Book(String id, String title, String link, double price) {
 		try {
 			this.id = id;
 			this.title = title;
@@ -29,11 +31,15 @@ public class Book {
 		}
 	}
 
-	public int getId() {
+	public Book(JSONObject object) throws JSONException {
+		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("prize"));
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -61,8 +67,9 @@ public class Book {
 		this.price = price;
 	}
 
-	public void fetchImage() throws IOException {
+	public Book fetchImage() throws IOException {
 		image = BitmapFactory.decodeStream((InputStream) this.link.getContent());
+		return this;
 	}
 
 	public Bitmap getImage() throws IOException {

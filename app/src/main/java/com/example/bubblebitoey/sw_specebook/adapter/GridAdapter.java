@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.Books;
 
 import java.io.IOException;
 import java.util.*;
@@ -19,16 +18,19 @@ import java.util.*;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class GridAdapter extends ArrayAdapter {
+public class GridAdapter extends ArrayAdapter<Book> {
 	private Context context;
 	private int layoutResourceId;
-	private Books books;
 
-	public GridAdapter(Context context, int layoutResourceId, Books books) {
-		super(context, layoutResourceId, books.getBooks());
+	public GridAdapter(Context context, int layoutResourceId) {
+		super(context, layoutResourceId);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
-		this.books = books;
+	}
+
+	@Override
+	public synchronized void add(Book object) {
+		super.add(object);
 	}
 
 	@Override
@@ -47,8 +49,8 @@ public class GridAdapter extends ArrayAdapter {
 			holder = (ViewHolder) row.getTag();
 		}
 
-		Book item = books.getBook(position);
-		holder.title.setText(String.format(Locale.ENGLISH, "%d: %s \nprice: %.2f$", item.getId(), item.getTitle(), item.getPrice()));
+		Book item = getItem(position);
+		holder.title.setText(String.format(Locale.ENGLISH, "%s: %s \nprice: %.2f$", item.getId(), item.getTitle(), item.getPrice()));
 		try {
 			holder.image.setImageBitmap(item.getImage());
 		} catch (IOException e) {

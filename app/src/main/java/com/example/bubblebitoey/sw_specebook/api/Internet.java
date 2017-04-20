@@ -25,6 +25,6 @@ public class Internet {
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new JSONArray();
 	}
 }
