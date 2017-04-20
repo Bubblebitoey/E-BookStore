@@ -7,7 +7,5 @@ import com.example.bubblebitoey.sw_specebook.model.Books;
  */
 
 public interface View {
-	public void updateGrid();
-
 	public void setData(Books books);
 }

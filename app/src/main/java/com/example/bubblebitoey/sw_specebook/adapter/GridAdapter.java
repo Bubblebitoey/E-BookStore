@@ -13,6 +13,7 @@ import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
 
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
@@ -39,7 +40,7 @@ public class GridAdapter extends ArrayAdapter {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = new ViewHolder();
-			holder.imageTitle = (TextView) row.findViewById(R.id.text);
+			holder.title = (TextView) row.findViewById(R.id.text);
 			holder.image = (ImageView) row.findViewById(R.id.image);
 			row.setTag(holder);
 		} else {
@@ -47,7 +48,7 @@ public class GridAdapter extends ArrayAdapter {
 		}
 
 		Book item = books.getBook(position);
-		holder.imageTitle.setText(item.getTitle());
+		holder.title.setText(String.format(Locale.ENGLISH, "%d: %s \nprice: %.2f$", item.getId(), item.getTitle(), item.getPrice()));
 		try {
 			holder.image.setImageBitmap(item.getImage());
 		} catch (IOException e) {
@@ -57,7 +58,7 @@ public class GridAdapter extends ArrayAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView imageTitle;
+		TextView title;
 		ImageView image;
 	}
 }

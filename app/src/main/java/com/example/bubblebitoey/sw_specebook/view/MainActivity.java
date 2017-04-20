@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View {
 		gridView = (GridView) findViewById(R.id.gridView);
 
 		presenter = new MainPresenter(this);
-		presenter.execute(new Book(12, "asdf", "https://imagery.pragprog.com/products/508/dcbang2_largebeta.jpg", 24.95), new Book(13, "fdsa", "https://imagery.pragprog.com/products/508/dcbang2_largebeta.jpg", 12.54), new Book(14, "ddsaa", "https://imagery.pragprog.com/products/508/dcbang2_largebeta.jpg", 99.01));
+		presenter.execute(new Book(12, "how to fall in love with your dog.", "https://imagery.pragprog.com/products/508/dcbang2_largebeta.jpg", 24.95), new Book(13, "fdsa", "https://imagery.pragprog.com/products/508/dcbang2_largebeta.jpg", 12.54), new Book(14, "ddsaa", "https://imagery.pragprog.com/products/508/dcbang2_largebeta.jpg", 99.01));
 	}
 
 	@Override
@@ -29,19 +29,3 @@ public class MainActivity extends AppCompatActivity implements View {
 		gridView.setAdapter(gridAdapter);
 	}
 }
-
-
-//		try {
-//			BufferedReader read = new BufferedReader(new InputStreamReader(Constants.link.openStream()));
-//			StringBuilder sb = new StringBuilder();
-//			String line;
-//			while ((line = read.readLine()) != null) {
-//				sb.append(line).append("\n");
-//			}
-//
-//			JSONArray array = new JSONArray(sb.toString());
-
-//		} catch (IOException | JSONException e) {
-//			e.printStackTrace();
-//		}
-//		return null;

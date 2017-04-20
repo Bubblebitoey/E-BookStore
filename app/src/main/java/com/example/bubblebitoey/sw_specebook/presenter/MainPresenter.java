@@ -18,10 +18,6 @@ public class MainPresenter extends AsyncTask<Book, Void, Books> {
 		view = v;
 	}
 
-	public void showGrid() {
-		view.updateGrid();
-	}
-
 	@Override
 	protected Books doInBackground(Book... params) {
 		try {
