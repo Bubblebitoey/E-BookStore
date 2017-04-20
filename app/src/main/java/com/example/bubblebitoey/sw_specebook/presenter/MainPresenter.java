@@ -3,7 +3,6 @@ package com.example.bubblebitoey.sw_specebook.presenter;
 import android.os.AsyncTask;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.view.View;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +14,7 @@ import java.io.IOException;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class MainPresenter extends AsyncTask<Void, Void, Books> {
+public class MainPresenter extends AsyncTask<Void, Void, Void> {
 	private View view;
 
 	public MainPresenter(View v) {
@@ -23,8 +22,7 @@ public class MainPresenter extends AsyncTask<Void, Void, Books> {
 	}
 
 	@Override
-	protected Books doInBackground(Void... params) {
-		Books books = new Books();
+	protected Void doInBackground(Void... params) {
 		JSONArray a = Internet.fetchData();
 		view.setMaxProgress(a.length());
 
@@ -32,7 +30,6 @@ public class MainPresenter extends AsyncTask<Void, Void, Books> {
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject o = a.getJSONObject(i);
 				Book b = new Book(o).fetchImage();
-				books.add(b);
 				view.updateData(b);
 				view.updateProgress(i + 1);
 				System.out.println("fetch (" + i + "/" + a.length() + ")");
@@ -40,11 +37,11 @@ public class MainPresenter extends AsyncTask<Void, Void, Books> {
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
 		}
-		return books;
+		return null;
 	}
 
 	@Override
-	protected void onPostExecute(Books books) {
+	protected void onPostExecute(Void voids) {
 		view.removeProgress();
 	}
 }

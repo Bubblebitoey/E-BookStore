@@ -7,13 +7,16 @@ import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
 import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.presenter.MainPresenter;
 
 public class MainActivity extends AppCompatActivity implements View {
 	private MainPresenter presenter;
 	private GridView gridView;
-	GridAdapter gridAdapter;
+	private GridAdapter gridAdapter;
 	private ProgressBar progressBar;
+
+	private Books books;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +27,15 @@ public class MainActivity extends AppCompatActivity implements View {
 		gridView.setAdapter(gridAdapter);
 		progressBar = (ProgressBar) findViewById(R.id.progress);
 
+		books = new Books();
+
 		presenter = new MainPresenter(this);
 		presenter.execute();
 	}
 
 	@Override
 	public void updateData(final Book book) {
+		books.add(book);
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
