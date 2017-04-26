@@ -1,8 +1,7 @@
-package com.example.bubblebitoey.sw_specebook.presenter;
+package com.example.bubblebitoey.sw_specebook.model;
 
 import android.os.AsyncTask;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
-import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.view.View;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,12 +13,8 @@ import java.io.IOException;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class MainPresenter extends AsyncTask<Void, Void, Void> {
+public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 	private View view;
-
-	public MainPresenter(View v) {
-		view = v;
-	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
@@ -43,5 +38,16 @@ public class MainPresenter extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onPostExecute(Void voids) {
 		view.removeProgress();
+	}
+
+	@Override
+	public Store setView(View view) {
+		this.view = view;
+		return this;
+	}
+
+	@Override
+	public void loadBook() {
+		this.execute();
 	}
 }
