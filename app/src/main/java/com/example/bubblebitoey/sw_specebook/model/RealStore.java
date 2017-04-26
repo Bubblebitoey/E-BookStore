@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
@@ -27,7 +28,7 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 				Book b = new Book(o).fetchImage();
 				view.updateData(b);
 				view.updateProgress(i + 1);
-				System.out.println("fetch (" + i + "/" + a.length() + ")");
+				System.out.println("fetch (" + (i + 1) + "/" + a.length() + ")");
 			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
@@ -37,7 +38,14 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 
 	@Override
 	protected void onPostExecute(Void voids) {
+		view.sort(new Comparator<Book>() {
+			@Override
+			public int compare(Book o1, Book o2) {
+				return o1.getTitle().compareTo(o2.getTitle());
+			}
+		});
 		view.removeProgress();
+		view.search(true);
 	}
 
 	@Override
