@@ -1,6 +1,8 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
 import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Books;
+import com.example.bubblebitoey.sw_specebook.model.Store;
 
 import java.util.*;
 
@@ -9,12 +11,12 @@ import java.util.*;
  */
 
 public interface View {
-	String byTitle = "title";
-	String byYear = "year";
 
 	void setMaxProgress(int max);
 
 	void updateData(Book book);
+
+	void updateData(Books books);
 
 	void updateProgress(int current);
 
@@ -24,5 +26,5 @@ public interface View {
 
 	void sort(Comparator<Book> compare);
 
-	void filter(String by);
+	void filter(Store.OperationType type, String text);
 }

@@ -2,6 +2,9 @@ package com.example.bubblebitoey.sw_specebook.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
@@ -9,14 +12,13 @@ import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.TitleFilter;
-import com.example.bubblebitoey.sw_specebook.model.YearFilter;
-import com.example.bubblebitoey.sw_specebook.presenter.MainPresenter;
+import com.example.bubblebitoey.sw_specebook.model.MockupStore;
+import com.example.bubblebitoey.sw_specebook.model.Store;
 
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View {
-	private MainPresenter presenter;
+	private Store store;
 	private GridView gridView;
 	private GridAdapter gridAdapter;
 	private ProgressBar progressBar;
@@ -32,11 +34,14 @@ public class MainActivity extends AppCompatActivity implements View {
 		gridAdapter = new GridAdapter(this, R.layout.grid_layout);
 		gridView.setAdapter(gridAdapter);
 		progressBar = (ProgressBar) findViewById(R.id.progress);
-		// searchBar = (EditText) findViewById(R.id.sea);
+		searchBar = (EditText) findViewById(R.id.search_bar);
 		books = new Books();
 
-		presenter = new MainPresenter(this);
-		presenter.execute();
+		search(false);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
+
+		store = new MockupStore().setView(this);
+		store.loadBook();
 	}
 
 	@Override
@@ -48,6 +53,11 @@ public class MainActivity extends AppCompatActivity implements View {
 				gridAdapter.add(book);
 			}
 		});
+	}
+
+	@Override
+	public void updateData(Books books) {
+		books.addAll(books);
 	}
 
 	@Override
@@ -67,7 +77,30 @@ public class MainActivity extends AppCompatActivity implements View {
 
 	@Override
 	public void search(boolean enable) {
+		searchBar.setVisibility(enable ? android.view.View.VISIBLE: android.view.View.INVISIBLE);
+		searchBar.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// do nothing
+			}
 
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// do nothing
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (!s.toString().isEmpty()) {
+					if (Character.isDigit(s.toString().charAt(0))) {
+						gridAdapter.setFilter(Store.OperationType.YEAR);
+					} else {
+						gridAdapter.setFilter(Store.OperationType.TITLE);
+					}
+				}
+				gridAdapter.getFilter().filter(s.toString());
+			}
+		});
 	}
 
 	@Override
@@ -76,14 +109,8 @@ public class MainActivity extends AppCompatActivity implements View {
 	}
 
 	@Override
-	public void filter(String by) {
-		switch (by) {
-			case View.byTitle:
-				gridAdapter.setFilter(new TitleFilter(gridAdapter));
-				break;
-			case View.byYear:
-				gridAdapter.setFilter(new YearFilter(gridAdapter));
-				break;
-		}
+	public void filter(Store.OperationType type, String text) {
+		gridAdapter.setFilter(type);
+		gridAdapter.getFilter().filter(text);
 	}
 }

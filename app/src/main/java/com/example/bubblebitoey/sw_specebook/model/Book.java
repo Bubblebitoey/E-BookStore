@@ -34,7 +34,7 @@ public class Book {
 	}
 
 	public Book(JSONObject object) throws JSONException {
-		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("prize"), object.getString("pub_year"));
+		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("price"), object.getString("pub_year"));
 	}
 
 	public String getId() {
@@ -92,5 +92,17 @@ public class Book {
 
 	public boolean isSameTitle(Book b) {
 		return b.getTitle().equals(this.getTitle());
+	}
+
+	@Override
+	public String toString() {
+		return "Book{" +
+				       "id='" + id + '\'' +
+				       ", image=" + image +
+				       ", title='" + title + '\'' +
+				       ", link=" + link +
+				       ", price=" + price +
+				       ", year='" + year + '\'' +
+				       '}';
 	}
 }

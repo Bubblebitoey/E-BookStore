@@ -17,15 +17,23 @@ public class Books {
 		books.add(book);
 	}
 
+	public void addAll(Books books) {
+		this.books.addAll(books.getBooks());
+	}
+
 	public Book getBook(int pos) {
 		return books.get(pos);
 	}
 
-	public List getBooks() {
+	public List<Book> getBooks() {
 		return books;
 	}
 
-	public void sort() {
+	public int size() {
+		return books.size();
+	}
 
+	public void sort(Comparator<? super Book> compare) {
+		Collections.sort(books, compare);
 	}
 }
