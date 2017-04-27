@@ -20,4 +20,9 @@ public class PassingActivity {
 		//Start details activity
 		from.startActivity(intent);
 	}
+	
+	public static void newActivity(Context from, Class to) {
+		//Start details activity
+		from.startActivity(new Intent(from, to));
+	}
 }

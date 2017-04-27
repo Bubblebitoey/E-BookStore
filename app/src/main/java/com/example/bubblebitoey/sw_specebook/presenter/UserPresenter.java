@@ -26,6 +26,7 @@ public class UserPresenter {
 		setName();
 		setListener();
 		setMoney();
+		setImage();
 	}
 	
 	public AlertDialog getAlertDialog(Context context) {
@@ -58,5 +59,9 @@ public class UserPresenter {
 	
 	private void setMoney() {
 		view.setMoneyText(String.valueOf(user.getCurrentMoney()));
+	}
+	
+	private void setImage() {
+		view.setImage(user.getImage(view.getContext()));
 	}
 }

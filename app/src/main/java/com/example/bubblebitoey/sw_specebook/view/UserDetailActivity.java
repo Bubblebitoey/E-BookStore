@@ -1,5 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -65,7 +67,22 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	}
 	
 	@Override
+	public void setImage(Bitmap bitmap) {
+		image.setImageBitmap(bitmap);
+	}
+	
+	@Override
+	public Context getContext() {
+		return getBaseContext();
+	}
+	
+	@Override
 	public void to(Map<String, Serializable> data, Class nextActivity) {
 		PassingActivity.newActivity(data, this, nextActivity);
+	}
+	
+	@Override
+	public void to(Class nextActivity) {
+		PassingActivity.newActivity(this, nextActivity);
 	}
 }

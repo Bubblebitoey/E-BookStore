@@ -1,5 +1,6 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
+import android.widget.AdapterView;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
@@ -32,4 +33,6 @@ public interface BookListView extends View {
 	void login(User u);
 	
 	void logout();
+	
+	void setOnClickBook(AdapterView.OnItemClickListener listener);
 }

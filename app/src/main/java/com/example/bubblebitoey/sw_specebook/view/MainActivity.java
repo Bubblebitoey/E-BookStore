@@ -47,22 +47,15 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 		searchBar = (EditText) findViewById(R.id.search_bar);
 		
 		search(false); // searching feature
-		clickSetting(); // book information
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
 		
 		books = new Books();
 		presenter = new MainPresenter(this, new RealStore().setView(this));
 	}
 	
-	private void clickSetting() {
-		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
-				Map<String, Serializable> map = new HashMap<>();
-				map.put("book", (Book) parent.getItemAtPosition(position));
-				PassingActivity.newActivity(map, MainActivity.this, null);
-			}
-		});
+	@Override
+	public void setOnClickBook(AdapterView.OnItemClickListener listener) {
+		gridView.setOnItemClickListener(listener);
 	}
 	
 	@Override
@@ -82,7 +75,12 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 	
 	@Override
 	public void to(Map<String, Serializable> data, Class nextActivity) {
-		PassingActivity.newActivity(data, MainActivity.this, nextActivity);
+		PassingActivity.newActivity(data, this, nextActivity);
+	}
+	
+	@Override
+	public void to(Class nextActivity) {
+		PassingActivity.newActivity(this, nextActivity);
 	}
 	
 	@Override
