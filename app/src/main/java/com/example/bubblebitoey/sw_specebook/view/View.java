@@ -11,20 +11,22 @@ import java.util.*;
  */
 
 public interface View {
-
+	
 	void setMaxProgress(int max);
-
+	
 	void updateData(Book book);
-
+	
 	void updateData(Books books);
-
+	
 	void updateProgress(int current);
-
+	
 	void removeProgress();
-
+	
 	void search(boolean enable);
-
+	
 	void sort(Comparator<Book> compare);
-
+	
 	void filter(Store.OperationType type, String text);
+	
+	void login(boolean haveUser);
 }

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -12,21 +15,19 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
-import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.RealStore;
-import com.example.bubblebitoey.sw_specebook.model.Store;
+import com.example.bubblebitoey.sw_specebook.model.*;
 
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View {
 	private Store store;
+	private User user;
 	private GridView gridView;
 	private GridAdapter gridAdapter;
 	private ProgressBar progressBar;
 	private EditText searchBar;
-	
 	private Books books;
+	private Menu menu;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,47 @@ public class MainActivity extends AppCompatActivity implements View {
 				startActivity(intent);
 			}
 		});
+	}
+	
+	@Override
+	public void login(boolean haveUser) {
+		menu.findItem(R.id.login).setVisible(!haveUser);
+		menu.findItem(R.id.user).setVisible(haveUser);
+		if (haveUser) menu.findItem(R.id.user).setTitle(user.getName());
+		menu.findItem(R.id.logout).setVisible(haveUser);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.topmenu, menu);
+		this.menu = menu;
+		login(false);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.login:
+				user = new MockupUser();
+				login(true);
+				break;
+			case R.id.user:
+				// new page
+				break;
+			case R.id.logout:
+				user = null;
+				login(false);
+				break;
+			case R.id.about:
+				// show about app
+				break;
+			default:
+				
+				break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override
