@@ -1,5 +1,9 @@
 package com.example.bubblebitoey.sw_specebook.model.mock;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.Cart;
 import com.example.bubblebitoey.sw_specebook.model.NullBook;
@@ -20,6 +24,11 @@ public class MockupUser implements User {
 	@Override
 	public double getCurrentMoney() {
 		return money;
+	}
+	
+	@Override
+	public Bitmap getImage(Context t) {
+		return BitmapFactory.decodeResource(t.getResources(), R.drawable.user_picture_default);
 	}
 	
 	@Override

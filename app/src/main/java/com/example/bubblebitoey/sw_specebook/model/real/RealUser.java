@@ -1,5 +1,9 @@
 package com.example.bubblebitoey.sw_specebook.model.real;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.Cart;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
@@ -27,6 +31,11 @@ public class RealUser implements User {
 	@Override
 	public double getCurrentMoney() {
 		return total;
+	}
+	
+	@Override
+	public Bitmap getImage(Context t) {
+		return BitmapFactory.decodeResource(t.getResources(), R.drawable.user_picture_default);
 	}
 	
 	@Override
