@@ -1,6 +1,5 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,7 +15,9 @@ import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
 import com.example.bubblebitoey.sw_specebook.model.*;
+import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View {
@@ -51,12 +52,9 @@ public class MainActivity extends AppCompatActivity implements View {
 		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
-				Book item = (Book) parent.getItemAtPosition(position);
-				//Create intent
-				Intent intent = new Intent(MainActivity.this, null/* x.class */);
-				intent.putExtra("book", item);
-				//Start details activity
-				startActivity(intent);
+				Map<String, Serializable> map = new HashMap<>();
+				map.put("book", (Book) parent.getItemAtPosition(position));
+				PassingActivity.newActivity(map, MainActivity.this, null);
 			}
 		});
 	}
@@ -86,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements View {
 				login(true);
 				break;
 			case R.id.user:
-				// new page
+				Map<String, Serializable> map = new HashMap<>();
+				map.put("user", user);
+				PassingActivity.newActivity(map, MainActivity.this, UserDetailActivity.class);
 				break;
 			case R.id.logout:
 				user = null;
