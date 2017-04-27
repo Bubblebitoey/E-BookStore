@@ -4,4 +4,6 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="about">About</string>
+    <string name="title_activity_user_detail">UserDetailActivity</string>
+    <string name="user_image">user image</string>
 </resources>
