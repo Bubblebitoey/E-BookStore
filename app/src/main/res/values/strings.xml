@@ -4,7 +4,8 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="about">About</string>
-    <string name="title_activity_user_detail">UserDetailActivity</string>
+    <string name="title_activity_user_detail">User</string>
+    <string name="book_detail">Name</string>
     <string name="user_image">user image</string>
     <string name="my_books">My Books</string>
 </resources>
