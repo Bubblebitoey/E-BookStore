@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.*;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
@@ -89,13 +90,13 @@ public class Book implements Serializable {
 	}
 	
 	public boolean isSameYear(String year) {
-		return this.getYear().startsWith(year);
+		return this.getYear().startsWith(year.toLowerCase(Locale.ENGLISH));
 	}
 	
 	public boolean isSameTitle(String title) {
 		String[] words = this.getTitle().split(" ");
 		for (String word : words) {
-			if (word.startsWith(title)) return true;
+			if (word.startsWith(title.toLowerCase(Locale.ENGLISH))) return true;
 		}
 		return false;
 	}
