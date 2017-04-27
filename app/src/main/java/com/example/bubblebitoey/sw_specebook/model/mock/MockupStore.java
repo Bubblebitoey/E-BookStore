@@ -1,7 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.model.mock;
 
 import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.view.View;
 
 /**

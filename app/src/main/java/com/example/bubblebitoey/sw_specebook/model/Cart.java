@@ -1,5 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
+
 /**
  * Created by bubblebitoey on 4/27/2017 AD.
  */

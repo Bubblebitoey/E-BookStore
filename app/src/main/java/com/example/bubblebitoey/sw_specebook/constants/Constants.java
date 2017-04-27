@@ -9,8 +9,8 @@ import java.net.URL;
 
 public class Constants {
 	public static final URL link = getLink("https://theory.cpe.ku.ac.th/~jittat/courses/sw-spec/ebooks/books.json");
-
-	public static URL getLink(String link) {
+	
+	private static URL getLink(String link) {
 		try {
 			return new URL(link);
 		} catch (MalformedURLException e) {

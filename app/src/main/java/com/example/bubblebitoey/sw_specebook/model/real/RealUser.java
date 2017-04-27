@@ -2,7 +2,7 @@ package com.example.bubblebitoey.sw_specebook.model.real;
 
 import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.Cart;
-import com.example.bubblebitoey.sw_specebook.model.User;
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
 
 import java.util.*;
 

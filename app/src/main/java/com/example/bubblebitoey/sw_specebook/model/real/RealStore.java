@@ -5,7 +5,7 @@ import com.example.bubblebitoey.sw_specebook.api.BookBuilder;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.api.Sorting;
 import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.view.View;
 import org.json.JSONArray;
 import org.json.JSONException;
