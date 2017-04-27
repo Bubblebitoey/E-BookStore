@@ -14,38 +14,45 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
-import com.example.bubblebitoey.sw_specebook.model.*;
+import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Books;
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
+import com.example.bubblebitoey.sw_specebook.model.real.RealStore;
+import com.example.bubblebitoey.sw_specebook.presenter.MainPresenter;
 import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 
 import java.io.Serializable;
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity implements View {
-	private Store store;
-	private User user;
 	private GridView gridView;
 	private GridAdapter gridAdapter;
 	private ProgressBar progressBar;
 	private EditText searchBar;
-	private Books books;
 	private Menu menu;
+	
+	private MainPresenter presenter;
+	private Books books;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		gridView = (GridView) findViewById(R.id.gridView);
 		gridAdapter = new GridAdapter(this, R.layout.grid_layout);
 		gridView.setAdapter(gridAdapter);
 		progressBar = (ProgressBar) findViewById(R.id.progress);
 		searchBar = (EditText) findViewById(R.id.search_bar);
-		books = new Books();
 		
-		search(false);
+		search(false); // searching feature
+		clickSetting(); // book information
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
 		
-		store = new RealStore().setView(this);
-		store.loadBook();
+		books = new Books();
+		presenter = new MainPresenter(this, new RealStore().setView(this));
+		presenter.loadData();
 	}
 	
 	private void clickSetting() {
@@ -60,11 +67,23 @@ public class MainActivity extends AppCompatActivity implements View {
 	}
 	
 	@Override
-	public void login(boolean haveUser) {
-		menu.findItem(R.id.login).setVisible(!haveUser);
-		menu.findItem(R.id.user).setVisible(haveUser);
-		if (haveUser) menu.findItem(R.id.user).setTitle(user.getName());
-		menu.findItem(R.id.logout).setVisible(haveUser);
+	public void login(User u) {
+		menu.findItem(R.id.login).setVisible(false);
+		menu.findItem(R.id.user).setVisible(true);
+		menu.findItem(R.id.user).setTitle(u.getName());
+		menu.findItem(R.id.logout).setVisible(true);
+	}
+	
+	@Override
+	public void logout() {
+		menu.findItem(R.id.login).setVisible(true);
+		menu.findItem(R.id.user).setVisible(false);
+		menu.findItem(R.id.logout).setVisible(false);
+	}
+	
+	@Override
+	public void to(Map<String, Serializable> data, Class nextActivity) {
+		PassingActivity.newActivity(data, MainActivity.this, nextActivity);
 	}
 	
 	@Override
@@ -72,33 +91,13 @@ public class MainActivity extends AppCompatActivity implements View {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.topmenu, menu);
 		this.menu = menu;
-		login(false);
+		logout();
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.login:
-				user = new MockupUser();
-				login(true);
-				break;
-			case R.id.user:
-				Map<String, Serializable> map = new HashMap<>();
-				map.put("user", user);
-				PassingActivity.newActivity(map, MainActivity.this, UserDetailActivity.class);
-				break;
-			case R.id.logout:
-				user = null;
-				login(false);
-				break;
-			case R.id.about:
-				// show about app
-				break;
-			default:
-				
-				break;
-		}
+		presenter.menuClick(item);
 		return super.onOptionsItemSelected(item);
 	}
 	

@@ -2,8 +2,10 @@ package com.example.bubblebitoey.sw_specebook.view;
 
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -28,5 +30,9 @@ public interface View {
 	
 	void filter(Store.OperationType type, String text);
 	
-	void login(boolean haveUser);
+	void login(User u);
+	
+	void logout();
+	
+	void to(Map<String, Serializable> data, Class nextActivity);
 }

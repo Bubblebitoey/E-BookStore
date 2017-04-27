@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 
 import java.io.IOException;
 import java.util.*;

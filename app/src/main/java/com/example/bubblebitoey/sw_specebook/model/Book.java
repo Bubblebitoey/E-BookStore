@@ -2,8 +2,6 @@ package com.example.bubblebitoey.sw_specebook.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,10 +32,6 @@ public class Book implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public Book(JSONObject object) throws JSONException {
-		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("price"), object.getString("pub_year"));
 	}
 	
 	public String getId() {

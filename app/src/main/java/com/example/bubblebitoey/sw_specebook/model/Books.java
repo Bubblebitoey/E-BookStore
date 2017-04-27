@@ -1,5 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
+
 import java.util.*;
 
 /**
