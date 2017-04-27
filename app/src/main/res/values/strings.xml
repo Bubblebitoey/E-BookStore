@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Sw-spec/ebook</string>
     <string name="searching">searching (Title or Year)</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="about">About</string>
 </resources>
