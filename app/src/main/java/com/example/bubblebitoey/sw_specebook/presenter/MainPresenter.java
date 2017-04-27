@@ -19,6 +19,7 @@ import java.util.*;
  */
 
 public class MainPresenter {
+	public static final int CALL_USER_ACTIVITY = 1000;
 	private BookListView view;
 	private Store store;
 	private User user;
@@ -35,7 +36,6 @@ public class MainPresenter {
 	}
 	
 	private void setOnClick() {
-		
 		view.setOnClickBook(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View newView, int i, long l) {
@@ -53,7 +53,7 @@ public class MainPresenter {
 				view.login(user);
 				break;
 			case R.id.user:
-				view.to(UserDetailActivity.class);
+				view.toAndWait(CALL_USER_ACTIVITY, UserDetailActivity.class);
 				break;
 			case R.id.logout:
 				logout();

@@ -12,6 +12,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+        <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="User"/>
+        </android.support.design.widget.AppBarLayout>
+
         <ImageView
                 android:id="@+id/user_image"
                 android:layout_marginTop="10dp"
@@ -39,7 +51,7 @@
 
         <Button
                 android:id="@+id/myBooks"
-                android:text="My Books"
+                android:text="@string/my_books"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -52,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/colorWhite"
             app:srcCompat="@drawable/ic_add_black_48dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

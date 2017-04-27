@@ -84,6 +84,16 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 	}
 	
 	@Override
+	public void toAndWait(int code, Class nextActivity) {
+		PassingActivity.newActivityWithResult(code, this, nextActivity);
+	}
+	
+	@Override
+	public void toAndWait(int code, Map<String, Serializable> data, Class nextActivity) {
+		PassingActivity.newActivityWithResult(code, data, this, nextActivity);
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.topmenu, menu);

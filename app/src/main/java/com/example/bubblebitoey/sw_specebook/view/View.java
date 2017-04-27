@@ -11,4 +11,8 @@ public interface View {
 	void to(Class nextActivity);
 	
 	void to(Map<String, Serializable> data, Class nextActivity);
+	
+	void toAndWait(int code, Class nextActivity);
+	
+	void toAndWait(int code, Map<String, Serializable> data, Class nextActivity);
 }
