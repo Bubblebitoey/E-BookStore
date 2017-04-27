@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
+import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 import com.example.bubblebitoey.sw_specebook.presenter.UserPresenter;
@@ -29,7 +30,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_detail);
-		User user = (User) getIntent().getSerializableExtra("user");
+		User user = UserFactory.getInstance().getUser();
 		
 		image = (ImageView) findViewById(R.id.user_image);
 		userText = (TextView) findViewById(R.id.name);

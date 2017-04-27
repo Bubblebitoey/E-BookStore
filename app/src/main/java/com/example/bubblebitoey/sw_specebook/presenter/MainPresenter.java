@@ -2,7 +2,7 @@ package com.example.bubblebitoey.sw_specebook.presenter;
 
 import android.view.MenuItem;
 import com.example.bubblebitoey.sw_specebook.R;
-import com.example.bubblebitoey.sw_specebook.model.mock.MockupUser;
+import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.view.BookListView;
@@ -34,12 +34,11 @@ public class MainPresenter {
 	public void menuClick(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.login:
-				login(new MockupUser());
+				login(UserFactory.getInstance().createMockUser()); // TODO: 4/27/2017 AD change to non mock
 				view.login(user);
 				break;
 			case R.id.user:
 				Map<String, Serializable> map = new HashMap<>();
-				map.put("user", user);
 				view.to(map, UserDetailActivity.class);
 				break;
 			case R.id.logout:

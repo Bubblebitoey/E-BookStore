@@ -25,6 +25,7 @@ public class UserPresenter {
 		
 		setName();
 		setListener();
+		setMoney();
 	}
 	
 	public AlertDialog getAlertDialog(Context context) {
@@ -34,7 +35,7 @@ public class UserPresenter {
 			public void onClick(DialogInterface dialogInterface, int i) {
 				Integer integer = Integer.parseInt(c[i].subSequence(0, c[i].length() - 1).toString());
 				user.addMoney(integer);
-				view.setMoneyText(String.valueOf(user.getCurrentMoney()));
+				setMoney();
 			}
 		});
 		return builder.create();
@@ -51,7 +52,11 @@ public class UserPresenter {
 		});
 	}
 	
-	public void setName() {
+	private void setName() {
 		view.setName(user.getName());
+	}
+	
+	private void setMoney() {
+		view.setMoneyText(String.valueOf(user.getCurrentMoney()));
 	}
 }

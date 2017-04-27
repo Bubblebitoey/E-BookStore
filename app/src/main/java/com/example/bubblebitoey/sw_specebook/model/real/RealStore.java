@@ -1,7 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.model.real;
 
 import android.os.AsyncTask;
-import com.example.bubblebitoey.sw_specebook.api.BookBuilder;
+import com.example.bubblebitoey.sw_specebook.api.builder.BookBuilder;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.api.Sorting;
 import com.example.bubblebitoey.sw_specebook.model.Book;
