@@ -16,7 +16,7 @@ import java.util.*;
 public class Book implements Serializable {
 	private long serialVersionUID = 0L;
 	private String id;
-	private Bitmap image;
+	private transient Bitmap image;
 	private String title;
 	private URL link;
 	private double price;

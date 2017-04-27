@@ -2,13 +2,15 @@ package com.example.bubblebitoey.sw_specebook.model;
 
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class Books {
+public class Books implements Serializable {
+	private long serialVersionUID = 0L;
 	private List<Book> books;
 	
 	public Books(Book... book) {
