@@ -1,5 +1,6 @@
 package com.example.bubblebitoey.sw_specebook.presenter;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ public class MainPresenter {
 		this.store = store;
 		
 		loadData();
+		setOnClick();
 	}
 	
 	public void loadData() {
@@ -39,6 +41,7 @@ public class MainPresenter {
 		view.setOnClickBook(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View newView, int i, long l) {
+				Log.d("NEXT PAGE", "click image");
 				Map<String, Serializable> map = new HashMap<>();
 				map.put("book", (Book) adapterView.getItemAtPosition(i));
 				view.to(map, null); // TODO: 4/27/2017 AD show book information page
