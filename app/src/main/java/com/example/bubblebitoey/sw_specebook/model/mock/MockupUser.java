@@ -10,7 +10,7 @@ import com.example.bubblebitoey.sw_specebook.model.raw.User;
  */
 
 public class MockupUser implements User {
-	private int money = 1000;
+	private double money = 1000;
 	
 	@Override
 	public String getName() {
@@ -18,17 +18,17 @@ public class MockupUser implements User {
 	}
 	
 	@Override
-	public int getCurrentMoney() {
+	public double getCurrentMoney() {
 		return money;
 	}
 	
 	@Override
-	public void pay(int amount) {
+	public void pay(double amount) {
 		money -= amount;
 	}
 	
 	@Override
-	public void addMoney(int money) {
+	public void addMoney(double money) {
 		this.money += money;
 	}
 	

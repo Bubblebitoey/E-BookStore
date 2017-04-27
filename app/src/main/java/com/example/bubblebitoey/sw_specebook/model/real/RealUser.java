@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class RealUser implements User {
 	private String name;
-	private int total;
+	private double total;
 	
 	private List<Cart> cart;
 	
@@ -25,17 +25,17 @@ public class RealUser implements User {
 	}
 	
 	@Override
-	public int getCurrentMoney() {
+	public double getCurrentMoney() {
 		return total;
 	}
 	
 	@Override
-	public void pay(int amount) {
+	public void pay(double amount) {
 		total -= amount;
 	}
 	
 	@Override
-	public void addMoney(int money) {
+	public void addMoney(double money) {
 		total += money;
 	}
 	

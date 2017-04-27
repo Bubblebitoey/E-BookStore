@@ -12,11 +12,11 @@ import java.io.Serializable;
 public interface User extends Serializable {
 	String getName();
 	
-	int getCurrentMoney();
+	double getCurrentMoney();
 	
-	void pay(int amount);
+	void pay(double amount);
 	
-	void addMoney(int money);
+	void addMoney(double money);
 	
 	void add(Cart cart);
 	

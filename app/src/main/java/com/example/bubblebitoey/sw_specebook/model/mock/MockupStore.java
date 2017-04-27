@@ -2,16 +2,16 @@ package com.example.bubblebitoey.sw_specebook.model.mock;
 
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
-import com.example.bubblebitoey.sw_specebook.view.View;
+import com.example.bubblebitoey.sw_specebook.view.BookListView;
 
 /**
  * Created by bubblebitoey on 4/26/2017 AD.
  */
 public class MockupStore implements Store {
-	private View view;
+	private BookListView view;
 	
 	@Override
-	public Store setView(View view) {
+	public Store setView(BookListView view) {
 		this.view = view;
 		return this;
 	}
