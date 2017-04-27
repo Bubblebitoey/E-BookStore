@@ -25,29 +25,31 @@ import java.util.*;
 
 public class GridAdapter extends ArrayAdapter<Book> {
 	private static final String TAG = "Adapter";
-	private Books books;
+	private Books booksOriginal;
+	private Books booksCurrent;
 	private Context context;
 	private int layoutResourceId;
 	private Filter f;
-
+	
 	public GridAdapter(Context context, int layoutResourceId) {
 		super(context, layoutResourceId);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
-		books = new Books();
+		booksOriginal = new Books();
+		booksCurrent = new Books();
 	}
-
+	
 	@Override
 	public synchronized void add(Book object) {
 		super.add(object);
-		books.add(object);
+		booksCurrent.add(object);
+		booksOriginal.add(object);
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View row = convertView;
 		ViewHolder holder;
-
+		View row = convertView;
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
@@ -58,8 +60,8 @@ public class GridAdapter extends ArrayAdapter<Book> {
 		} else {
 			holder = (ViewHolder) row.getTag();
 		}
-
-		Book item = books.getBook(position);
+		
+		Book item = booksCurrent.getBook(position);
 		holder.title.setText(String.format(Locale.ENGLISH, "%s: %s (%s)\nprice: %.2f$", item.getId(), item.getTitle(), item.getYear(), item.getPrice()));
 		try {
 			holder.image.setImageBitmap(item.getImage());
@@ -68,7 +70,7 @@ public class GridAdapter extends ArrayAdapter<Book> {
 		}
 		return row;
 	}
-
+	
 	public void setFilter(Store.OperationType type) {
 		switch (type) {
 			case TITLE:
@@ -79,93 +81,98 @@ public class GridAdapter extends ArrayAdapter<Book> {
 				break;
 		}
 	}
-
+	
 	@Override
-	public void sort(Comparator<? super Book> comparator) {
-		books.sort(comparator);
+	public void sort(@NonNull Comparator<? super Book> comparator) {
 		super.sort(comparator);
+		booksOriginal.sort(comparator);
+		booksCurrent.sort(comparator);
 	}
-
+	
 	@NonNull
 	@Override
 	public Filter getFilter() {
 		return f;
 	}
-
+	
 	private static class ViewHolder {
 		TextView title;
 		ImageView image;
 	}
-
+	
 	private class YearFilter extends Filter {
-		private YearFilter() {
-		}
-
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
-			Log.d(TAG + " Year", String.valueOf(constraint));
+			Log.d("Filter by Year", String.valueOf(constraint));
 			FilterResults filterResult = new FilterResults();
 			Books result = new Books();
-
-			for (int i = 0; i < books.size(); i++) {
-				Book b = books.getBook(i);
-				Log.d(TAG + "Year", b.toString());
-				if (b.getYear().startsWith(String.valueOf(constraint))) {
-					result.add(b);
+			if (constraint == null || constraint.length() == 0) {
+				synchronized (this) {
+					filterResult.values = booksOriginal;
+					filterResult.count = booksOriginal.size();
 				}
+			} else {
+				for (int i = 0; i < booksOriginal.size(); i++) {
+					Book b = booksOriginal.getBook(i);
+					if (b.isSameYear(String.valueOf(constraint))) {
+						result.add(b);
+					}
+				}
+				filterResult.values = result;
+				filterResult.count = result.size();
 			}
-
-			filterResult.values = result;
-			filterResult.count = result.getBooks().size();
-
+			
+			Log.d("Filter Result", Arrays.toString(((Books) filterResult.values).getBooks().toArray()));
+			Log.d("Filter Result Count", String.valueOf(filterResult.count));
 			return filterResult;
 		}
-
+		
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			Log.d("Year", String.valueOf(results.count));
-			books = (Books) results.values;
-			if (results.count > 0) {
-				notifyDataSetChanged();
-			} else {
-				notifyDataSetInvalidated();
+			booksCurrent = (Books) results.values;
+			clear();
+			synchronized (this) {
+				addAll(booksCurrent.getBooks());
 			}
 		}
 	}
-
+	
 	private class TitleFilter extends Filter {
-		private TitleFilter() {
-		}
-
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
-			Log.d(TAG + " Title", String.valueOf(constraint));
+			Log.d("Filter by Title", String.valueOf(constraint));
 			FilterResults filterResult = new FilterResults();
 			Books result = new Books();
-
-			for (int i = 0; i < books.size(); i++) {
-				Book b = books.getBook(i);
-				if (b.getTitle().contains(constraint)) {
-					result.add(b);
+			if (constraint == null || constraint.length() == 0) {
+				Log.d("Status", "NON");
+				synchronized (this) {
+					filterResult.values = booksOriginal;
+					filterResult.count = booksOriginal.size();
 				}
+			} else {
+				Log.d("Status", "FILTER");
+				for (int i = 0; i < booksOriginal.size(); i++) {
+					Book b = booksOriginal.getBook(i);
+					if (b.isSameTitle(String.valueOf(constraint))) {
+						result.add(b);
+					}
+				}
+				filterResult.values = result;
+				filterResult.count = result.size();
 			}
-
-			filterResult.values = result;
-			filterResult.count = result.getBooks().size();
-
+			
+			Log.d("Filter Result", Arrays.toString(((Books) filterResult.values).getBooks().toArray()));
+			Log.d("Filter Result Count", String.valueOf(filterResult.count));
 			return filterResult;
 		}
-
+		
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			Log.d("title", String.valueOf(results.count));
-			books = (Books) results.values;
-			if (results.count > 0) {
-				notifyDataSetChanged();
-			} else {
-				notifyDataSetInvalidated();
+			booksCurrent = (Books) results.values;
+			clear();
+			synchronized (this) {
+				addAll(booksCurrent.getBooks());
 			}
 		}
 	}
-
 }
