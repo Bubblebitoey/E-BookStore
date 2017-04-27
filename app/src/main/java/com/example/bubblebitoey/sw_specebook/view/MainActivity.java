@@ -25,7 +25,7 @@ import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 import java.io.Serializable;
 import java.util.*;
 
-public class MainActivity extends AppCompatActivity implements View {
+public class MainActivity extends AppCompatActivity implements BookListView {
 	private GridView gridView;
 	private GridAdapter gridAdapter;
 	private ProgressBar progressBar;
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements View {
 		
 		books = new Books();
 		presenter = new MainPresenter(this, new RealStore().setView(this));
-		presenter.loadData();
 	}
 	
 	private void clickSetting() {
@@ -138,12 +137,10 @@ public class MainActivity extends AppCompatActivity implements View {
 		searchBar.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// do nothing
 			}
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// do nothing
 			}
 			
 			@Override

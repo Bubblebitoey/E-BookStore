@@ -6,7 +6,7 @@ import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.api.Sorting;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
-import com.example.bubblebitoey.sw_specebook.view.View;
+import com.example.bubblebitoey.sw_specebook.view.BookListView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 
 public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
-	private View view;
+	private BookListView view;
 	
 	@Override
 	protected Void doInBackground(Void... params) {
@@ -47,7 +47,7 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 	}
 	
 	@Override
-	public Store setView(View view) {
+	public Store setView(BookListView view) {
 		this.view = view;
 		return this;
 	}
