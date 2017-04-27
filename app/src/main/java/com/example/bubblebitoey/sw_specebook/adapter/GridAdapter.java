@@ -3,7 +3,6 @@ package com.example.bubblebitoey.sw_specebook.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,27 +102,17 @@ public class GridAdapter extends ArrayAdapter<Book> {
 	private class YearFilter extends Filter {
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
-			Log.d("Filter by Year", String.valueOf(constraint));
 			FilterResults filterResult = new FilterResults();
-			Books result = new Books();
 			if (constraint == null || constraint.length() == 0) {
 				synchronized (this) {
 					filterResult.values = booksOriginal;
 					filterResult.count = booksOriginal.size();
 				}
 			} else {
-				for (int i = 0; i < booksOriginal.size(); i++) {
-					Book b = booksOriginal.getBook(i);
-					if (b.isSameYear(String.valueOf(constraint))) {
-						result.add(b);
-					}
-				}
+				Books result = booksOriginal.filter(Store.OperationType.YEAR, String.valueOf(constraint));
 				filterResult.values = result;
 				filterResult.count = result.size();
 			}
-			
-			Log.d("Filter Result", Arrays.toString(((Books) filterResult.values).getBooks().toArray()));
-			Log.d("Filter Result Count", String.valueOf(filterResult.count));
 			return filterResult;
 		}
 		
@@ -140,29 +129,17 @@ public class GridAdapter extends ArrayAdapter<Book> {
 	private class TitleFilter extends Filter {
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
-			Log.d("Filter by Title", String.valueOf(constraint));
 			FilterResults filterResult = new FilterResults();
-			Books result = new Books();
 			if (constraint == null || constraint.length() == 0) {
-				Log.d("Status", "NON");
 				synchronized (this) {
 					filterResult.values = booksOriginal;
 					filterResult.count = booksOriginal.size();
 				}
 			} else {
-				Log.d("Status", "FILTER");
-				for (int i = 0; i < booksOriginal.size(); i++) {
-					Book b = booksOriginal.getBook(i);
-					if (b.isSameTitle(String.valueOf(constraint))) {
-						result.add(b);
-					}
-				}
+				Books result = booksOriginal.filter(Store.OperationType.TITLE, String.valueOf(constraint));
 				filterResult.values = result;
 				filterResult.count = result.size();
 			}
-			
-			Log.d("Filter Result", Arrays.toString(((Books) filterResult.values).getBooks().toArray()));
-			Log.d("Filter Result Count", String.valueOf(filterResult.count));
 			return filterResult;
 		}
 		

@@ -40,4 +40,21 @@ public class Books {
 	public void sort(Comparator<? super Book> compare) {
 		Collections.sort(books, compare);
 	}
+	
+	public Books filter(Store.OperationType type, String str) {
+		Books newBooks = new Books();
+		switch (type) {
+			case TITLE:
+				for (Book b : books) {
+					if (b.isSameTitle(str)) newBooks.add(b);
+				}
+				return newBooks;
+			case YEAR:
+				for (Book b : books) {
+					if (b.isSameYear(str)) newBooks.add(b);
+				}
+				return newBooks;
+		}
+		return new Books();
+	}
 }
