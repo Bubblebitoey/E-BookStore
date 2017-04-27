@@ -2,9 +2,9 @@ package com.example.bubblebitoey.sw_specebook.presenter;
 
 import android.view.MenuItem;
 import com.example.bubblebitoey.sw_specebook.R;
-import com.example.bubblebitoey.sw_specebook.model.Store;
-import com.example.bubblebitoey.sw_specebook.model.User;
 import com.example.bubblebitoey.sw_specebook.model.mock.MockupUser;
+import com.example.bubblebitoey.sw_specebook.model.raw.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.view.UserDetailActivity;
 import com.example.bubblebitoey.sw_specebook.view.View;
 
