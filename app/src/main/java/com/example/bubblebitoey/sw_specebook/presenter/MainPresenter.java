@@ -10,6 +10,7 @@ import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.view.BookListView;
+import com.example.bubblebitoey.sw_specebook.view.BookDetailActivity;
 import com.example.bubblebitoey.sw_specebook.view.UserDetailActivity;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public class MainPresenter {
 				Log.d("NEXT PAGE", "click image");
 				Map<String, Serializable> map = new HashMap<>();
 				map.put("book", (Book) adapterView.getItemAtPosition(i));
-				view.to(map, null); // TODO: 4/27/2017 AD show book information page
+				view.to(map, BookDetailActivity.class); // TODO: 4/27/2017 AD show book information page
 			}
 		});
 	}
