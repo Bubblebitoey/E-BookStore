@@ -10,10 +10,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
-import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.MockupStore;
-import com.example.bubblebitoey.sw_specebook.model.Store;
+import com.example.bubblebitoey.sw_specebook.model.*;
 
 import java.util.*;
 
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View {
 		search(false);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
 		
-		store = new MockupStore().setView(this);
+		store = new RealStore().setView(this);
 		store.loadBook();
 	}
 	
