@@ -21,10 +21,9 @@ import java.util.*;
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
-
 public class GridAdapter extends ArrayAdapter<Book> {
-	private final Filter FILTER_BY_TITLE = new TitleFilter();
-	private final Filter FILTER_BY_YEAR = new YearFilter();
+	private final Filter FILTER_BY_TITLE = new IFilter(Store.OperationType.TITLE);
+	private final Filter FILTER_BY_YEAR = new IFilter(Store.OperationType.YEAR);
 	
 	private static final String TAG = "Adapter";
 	private Books booksOriginal;
@@ -102,7 +101,13 @@ public class GridAdapter extends ArrayAdapter<Book> {
 		ImageView image;
 	}
 	
-	private class YearFilter extends Filter {
+	private class IFilter extends Filter {
+		private Store.OperationType type;
+		
+		private IFilter(Store.OperationType type) {
+			this.type = type;
+		}
+		
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults filterResult = new FilterResults();
@@ -112,7 +117,7 @@ public class GridAdapter extends ArrayAdapter<Book> {
 					filterResult.count = booksOriginal.size();
 				}
 			} else {
-				Books result = booksOriginal.filter(Store.OperationType.YEAR, String.valueOf(constraint));
+				Books result = booksOriginal.filter(type, String.valueOf(constraint));
 				filterResult.values = result;
 				filterResult.count = result.size();
 			}
@@ -120,35 +125,8 @@ public class GridAdapter extends ArrayAdapter<Book> {
 		}
 		
 		@Override
-		protected void publishResults(CharSequence constraint, FilterResults results) {
-			booksCurrent = (Books) results.values;
-			clear();
-			synchronized (this) {
-				addAll(booksCurrent.getBooks());
-			}
-		}
-	}
-	
-	private class TitleFilter extends Filter {
-		@Override
-		protected FilterResults performFiltering(CharSequence constraint) {
-			FilterResults filterResult = new FilterResults();
-			if (constraint == null || constraint.length() == 0) {
-				synchronized (this) {
-					filterResult.values = booksOriginal;
-					filterResult.count = booksOriginal.size();
-				}
-			} else {
-				Books result = booksOriginal.filter(Store.OperationType.TITLE, String.valueOf(constraint));
-				filterResult.values = result;
-				filterResult.count = result.size();
-			}
-			return filterResult;
-		}
-		
-		@Override
-		protected void publishResults(CharSequence constraint, FilterResults results) {
-			booksCurrent = (Books) results.values;
+		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+			booksCurrent = (Books) filterResults.values;
 			clear();
 			synchronized (this) {
 				addAll(booksCurrent.getBooks());
