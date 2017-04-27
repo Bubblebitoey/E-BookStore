@@ -23,6 +23,9 @@ import java.util.*;
  */
 
 public class GridAdapter extends ArrayAdapter<Book> {
+	private final Filter FILTER_BY_TITLE = new TitleFilter();
+	private final Filter FILTER_BY_YEAR = new YearFilter();
+	
 	private static final String TAG = "Adapter";
 	private Books booksOriginal;
 	private Books booksCurrent;
@@ -73,10 +76,10 @@ public class GridAdapter extends ArrayAdapter<Book> {
 	public void setFilter(Store.OperationType type) {
 		switch (type) {
 			case TITLE:
-				this.f = new TitleFilter();
+				this.f = FILTER_BY_TITLE;
 				break;
 			case YEAR:
-				this.f = new YearFilter();
+				this.f = FILTER_BY_YEAR;
 				break;
 		}
 	}
