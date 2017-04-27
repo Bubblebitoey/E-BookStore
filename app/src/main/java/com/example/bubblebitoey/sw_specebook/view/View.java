@@ -8,5 +8,7 @@ import java.util.*;
  */
 
 public interface View {
+	void to(Class nextActivity);
+	
 	void to(Map<String, Serializable> data, Class nextActivity);
 }
