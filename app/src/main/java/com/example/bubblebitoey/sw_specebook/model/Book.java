@@ -20,7 +20,7 @@ public class Book {
 	private URL link;
 	private double price;
 	private String year;
-
+	
 	public Book(String id, String title, String link, double price, String year) {
 		try {
 			this.id = id;
@@ -32,77 +32,74 @@ public class Book {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public Book(JSONObject object) throws JSONException {
 		this(object.getString("id"), object.getString("title"), object.getString("img_url"), object.getDouble("price"), object.getString("pub_year"));
 	}
-
+	
 	public String getId() {
 		return id;
 	}
-
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
 	public URL getLink() {
 		return link;
 	}
-
+	
 	public void setLink(URL link) {
 		this.link = link;
 	}
-
+	
 	public double getPrice() {
 		return price;
 	}
-
+	
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
+	
 	public Book fetchImage() throws IOException {
 		image = BitmapFactory.decodeStream((InputStream) this.link.getContent());
 		return this;
 	}
-
+	
 	public Bitmap getImage() throws IOException {
 		return image;
 	}
-
+	
 	public void setImage(Bitmap image) {
 		this.image = image;
 	}
-
+	
 	public String getYear() {
 		return year;
 	}
-
-	public boolean isSameYear(Book b) {
-		return b.getYear().equals(this.getYear());
+	
+	public boolean isSameYear(String year) {
+		return this.getYear().startsWith(year);
 	}
-
-	public boolean isSameTitle(Book b) {
-		return b.getTitle().equals(this.getTitle());
+	
+	public boolean isSameTitle(String title) {
+		String[] words = this.getTitle().split(" ");
+		for (String word : words) {
+			if (word.startsWith(title)) return true;
+		}
+		return false;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Book{" +
-				       "id='" + id + '\'' +
-				       ", image=" + image +
-				       ", title='" + title + '\'' +
-				       ", link=" + link +
-				       ", price=" + price +
-				       ", year='" + year + '\'' +
-				       '}';
+		return "Book{" + "id='" + id + '\'' + ", image=" + image + ", title='" + title + '\'' + ", link=" + link + ", price=" + price + ", year='" + year + '\'' + '}';
 	}
 }
