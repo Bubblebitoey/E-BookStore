@@ -1,10 +1,12 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
+import java.io.Serializable;
+
 /**
  * Created by bubblebitoey on 4/27/2017 AD.
  */
 
-public interface User {
+public interface User extends Serializable {
 	String getName();
 	
 	int getCurrentMoney();
@@ -14,4 +16,6 @@ public interface User {
 	void addMoney(int money);
 	
 	void add(Cart cart);
+	
+	Books getOwnerBook();
 }

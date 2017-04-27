@@ -26,4 +26,9 @@ public class MockupUser implements User {
 	@Override
 	public void add(Cart cart) {
 	}
+	
+	@Override
+	public Books getOwnerBook() {
+		return null;
+	}
 }
