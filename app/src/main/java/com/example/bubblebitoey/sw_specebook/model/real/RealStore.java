@@ -1,8 +1,11 @@
-package com.example.bubblebitoey.sw_specebook.model;
+package com.example.bubblebitoey.sw_specebook.model.real;
 
 import android.os.AsyncTask;
+import com.example.bubblebitoey.sw_specebook.api.BookBuilder;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.api.Sorting;
+import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Store;
 import com.example.bubblebitoey.sw_specebook.view.View;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +28,7 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 		try {
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject o = a.getJSONObject(i);
-				Book b = new Book(o).fetchImage();
+				Book b = BookBuilder.createBook(o).fetchImage();
 				view.updateData(b);
 				view.updateProgress(i + 1);
 				System.out.println("fetch (" + (i + 1) + "/" + a.length() + ")");

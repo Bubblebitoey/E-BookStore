@@ -1,4 +1,7 @@
-package com.example.bubblebitoey.sw_specebook.model;
+package com.example.bubblebitoey.sw_specebook.model.raw;
+
+import com.example.bubblebitoey.sw_specebook.model.Books;
+import com.example.bubblebitoey.sw_specebook.model.Cart;
 
 import java.io.Serializable;
 
