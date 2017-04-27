@@ -5,8 +5,8 @@ import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.model.mock.MockupUser;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
+import com.example.bubblebitoey.sw_specebook.view.BookListView;
 import com.example.bubblebitoey.sw_specebook.view.UserDetailActivity;
-import com.example.bubblebitoey.sw_specebook.view.View;
 
 import java.io.Serializable;
 import java.util.*;
@@ -16,13 +16,15 @@ import java.util.*;
  */
 
 public class MainPresenter {
-	private View view;
+	private BookListView view;
 	private Store store;
 	private User user;
 	
-	public MainPresenter(View v, Store store) {
+	public MainPresenter(BookListView v, Store store) {
 		this.view = v;
 		this.store = store;
+		
+		loadData();
 	}
 	
 	public void loadData() {
