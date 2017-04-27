@@ -1,11 +1,15 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
+import java.util.*;
+
 /**
  * Created by bubblebitoey on 4/27/2017 AD.
  */
 public class RealUser implements User {
 	private String name;
 	private int total;
+	
+	private List<Cart> cart;
 	
 	public RealUser(String name) {
 		this.name = name;
@@ -29,5 +33,18 @@ public class RealUser implements User {
 	@Override
 	public void addMoney(int money) {
 		total += money;
+	}
+	
+	@Override
+	public void add(Cart cart) {
+		this.cart.add(cart);
+	}
+	
+	public Books getOwnerBook() {
+		Books b = new Books();
+		for (Cart c : cart) {
+			if (c.isPaid()) b.addAll(c.getBooks());
+		}
+		return b;
 	}
 }

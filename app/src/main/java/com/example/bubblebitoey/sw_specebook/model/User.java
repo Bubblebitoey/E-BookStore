@@ -12,4 +12,6 @@ public interface User {
 	void pay(int amount);
 	
 	void addMoney(int money);
+	
+	void add(Cart cart);
 }

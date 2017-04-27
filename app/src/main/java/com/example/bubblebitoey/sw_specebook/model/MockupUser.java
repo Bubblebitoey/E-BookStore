@@ -22,4 +22,8 @@ public class MockupUser implements User {
 	@Override
 	public void addMoney(int money) {
 	}
+	
+	@Override
+	public void add(Cart cart) {
+	}
 }
