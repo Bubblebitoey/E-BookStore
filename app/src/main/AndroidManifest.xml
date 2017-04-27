@@ -19,8 +19,11 @@
         </activity>
         <activity
                 android:name=".view.UserDetailActivity"
-                android:label="@string/title_activity_user_detail"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:label="@string/title_activity_user_detail">
+        </activity>
+        <activity
+                android:name=".view.BookDetailActivity"
+                android:label="@string/book_detail">
         </activity>
     </application>
 
