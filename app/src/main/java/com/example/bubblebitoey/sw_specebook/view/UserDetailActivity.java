@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
-import com.example.bubblebitoey.sw_specebook.model.User;
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 
 import java.io.Serializable;
