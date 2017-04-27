@@ -1,16 +1,21 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
-import com.example.bubblebitoey.sw_specebook.model.*;
+import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Books;
+import com.example.bubblebitoey.sw_specebook.model.RealStore;
+import com.example.bubblebitoey.sw_specebook.model.Store;
 
 import java.util.*;
 
@@ -39,6 +44,20 @@ public class MainActivity extends AppCompatActivity implements View {
 		
 		store = new RealStore().setView(this);
 		store.loadBook();
+	}
+	
+	private void clickSetting() {
+		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
+				Book item = (Book) parent.getItemAtPosition(position);
+				//Create intent
+				Intent intent = new Intent(MainActivity.this, null/* x.class */);
+				intent.putExtra("book", item);
+				//Start details activity
+				startActivity(intent);
+			}
+		});
 	}
 	
 	@Override

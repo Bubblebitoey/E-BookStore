@@ -7,13 +7,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class Book {
+public class Book implements Serializable {
+	private long serialVersionUID = 0L;
 	private String id;
 	private Bitmap image;
 	private String title;
