@@ -29,7 +29,7 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject o = a.getJSONObject(i);
 				Book b = BookBuilder.createBook(o).fetchImage();
-				view.updateData(b);
+				view.addNewBook(b);
 				view.updateProgress(i + 1);
 				System.out.println("fetch (" + (i + 1) + "/" + a.length() + ")");
 			}

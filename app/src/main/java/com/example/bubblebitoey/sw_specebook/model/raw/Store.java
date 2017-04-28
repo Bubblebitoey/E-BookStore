@@ -9,8 +9,8 @@ public interface Store {
 	enum OperationType {
 		TITLE, YEAR
 	}
-
+	
 	Store setView(BookListView view);
-
+	
 	void loadBook();
 }

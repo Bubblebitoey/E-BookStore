@@ -20,18 +20,14 @@ import java.util.*;
  * Created by kamontat on 4/27/2017 AD.
  */
 
-public class MainPresenter {
+public class MainPresenter implements ViewPresenter<BookListView> {
 	public static final int CALL_USER_ACTIVITY = 1000;
 	private BookListView view;
 	private Store store;
 	private User user;
 	
-	public MainPresenter(BookListView v, Store store) {
-		this.view = v;
+	public MainPresenter(Store store) {
 		this.store = store;
-		
-		loadData();
-		setOnClick();
 	}
 	
 	public void loadData() {
@@ -72,10 +68,25 @@ public class MainPresenter {
 		}
 	}
 	
+	@Override
+	public ViewPresenter setView(BookListView view) {
+		this.view = view;
+		presenterSetting();
+		return this;
+	}
+	
+	@Override
+	public void presenterSetting() {
+		loadData();
+		setOnClick();
+	}
+	
+	@Override
 	public void login(User user) {
 		if (this.user == null) this.user = user;
 	}
 	
+	@Override
 	public void logout() {
 		user = null;
 	}

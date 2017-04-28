@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
 		
 		books = new Books();
-		presenter = new MainPresenter(this, new RealStore().setView(this));
+		presenter = (MainPresenter) new MainPresenter(new RealStore().setView(this)).setView(this);
 	}
 	
 	@Override
@@ -109,24 +109,24 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 	}
 	
 	@Override
-	public void updateData(final Book book) {
+	public synchronized void setMaxProgress(int max) {
+		progressBar.setMax(max);
+	}
+	
+	@Override
+	public void addNewBook(final Book book) {
 		books.add(book);
+		setBook(book);
+	}
+	
+	@Override
+	public void setBook(final Book book) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				gridAdapter.add(book);
 			}
 		});
-	}
-	
-	@Override
-	public void updateData(Books books) {
-		books.addAll(books);
-	}
-	
-	@Override
-	public synchronized void setMaxProgress(int max) {
-		progressBar.setMax(max);
 	}
 	
 	@Override

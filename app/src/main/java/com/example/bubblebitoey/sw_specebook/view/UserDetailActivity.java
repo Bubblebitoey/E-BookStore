@@ -84,6 +84,16 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	}
 	
 	@Override
+	public void login(User u) {
+		// do nothing
+	}
+	
+	@Override
+	public void logout() {
+		// do nothing
+	}
+	
+	@Override
 	public void to(Class nextActivity) {
 		PassingActivity.newActivity(this, nextActivity);
 	}

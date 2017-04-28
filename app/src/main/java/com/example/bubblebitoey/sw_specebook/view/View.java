@@ -1,5 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -8,6 +10,11 @@ import java.util.*;
  */
 
 public interface View {
+	
+	void login(User u);
+	
+	void logout();
+	
 	void to(Class nextActivity);
 	
 	void to(Map<String, Serializable> data, Class nextActivity);
