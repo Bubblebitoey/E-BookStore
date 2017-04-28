@@ -2,7 +2,7 @@ package com.example.bubblebitoey.sw_specebook.model.mock;
 
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
-import com.example.bubblebitoey.sw_specebook.view.BookListView;
+import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 
 /**
  * Created by bubblebitoey on 4/26/2017 AD.
@@ -25,7 +25,6 @@ public class MockupStore implements Store {
 		view.addNewBook(new Book("1100", "name1", "https://imagery.pragprog.com/products/504/jwdsal_largebeta.jpg", 21.11, "2001"));
 		
 		view.removeProgress();
-		view.search(true);
-		// view.filter(OperationToList.YEAR, "2001");
+		// view.filter(OperationToList.Year, "2001");
 	}
 }

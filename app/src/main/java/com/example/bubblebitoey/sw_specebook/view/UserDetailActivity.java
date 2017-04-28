@@ -15,6 +15,7 @@ import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 import com.example.bubblebitoey.sw_specebook.presenter.UserPresenter;
+import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
 
 import java.io.Serializable;
 import java.util.*;

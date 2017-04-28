@@ -18,4 +18,6 @@ public interface Booklist {
 	Book getBook(int pos);
 	
 	void sort(Operation.Type type);
+	
+	void manualFilter();
 }

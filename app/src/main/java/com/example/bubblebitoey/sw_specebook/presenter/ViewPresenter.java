@@ -1,7 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.presenter;
 
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.view.View;
+import com.example.bubblebitoey.sw_specebook.view.raw.View;
 
 /**
  * Created by kamontat on 4/28/2017 AD.

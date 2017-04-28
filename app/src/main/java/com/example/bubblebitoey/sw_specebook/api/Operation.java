@@ -12,7 +12,7 @@ import java.util.*;
 
 public interface Operation<R> {
 	enum Type {
-		ID, TITLE, YEAR, PRICE;
+		ID, Title, Year, Price;
 	}
 	
 	R by(Type type);
@@ -26,11 +26,11 @@ public interface Operation<R> {
 			switch (type) {
 				case ID:
 					return new Sorting.ByID();
-				case TITLE:
+				case Title:
 					return new Sorting.ByTitle();
-				case YEAR:
+				case Year:
 					return new Sorting.ByYear();
-				case PRICE:
+				case Price:
 					return new Sorting.ByPrice();
 			}
 			return new NullComparator<>();

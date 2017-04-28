@@ -64,12 +64,19 @@ public class Books implements Serializable, Booklist, Filterable<Books> {
 	}
 	
 	@Override
+	public void manualFilter() {
+		// do nothing
+	}
+	
+	@Override
 	public Books filter(Operation.Type type, String str) {
 		filter.update(str);
 		Predicate<Book> predicate = filter.by(type);
 		Books newBooks = new Books();
-		for (Book b : books) {
-			if (predicate.apply(b)) newBooks.addNewBook(b);
+		synchronized (this) {
+			for (Book b : books) {
+				if (predicate.apply(b)) newBooks.addNewBook(b);
+			}
 		}
 		return newBooks;
 	}

@@ -88,11 +88,11 @@ public class Book implements Serializable {
 		switch (type) {
 			case ID:
 				return isMatchID(str);
-			case TITLE:
+			case Title:
 				return isMatchTitle(str);
-			case YEAR:
+			case Year:
 				return isMatchYear(str);
-			case PRICE:
+			case Price:
 				return isMatchPrice(str);
 		}
 		return false;
@@ -105,7 +105,7 @@ public class Book implements Serializable {
 	public boolean isMatchTitle(String title) {
 		String[] words = this.getTitle().split(" ");
 		for (String word : words) {
-			if (word.startsWith(title.toLowerCase(Locale.ENGLISH))) return true;
+			if (word.toLowerCase(Locale.ENGLISH).startsWith(title.toLowerCase(Locale.ENGLISH))) return true;
 		}
 		return false;
 	}

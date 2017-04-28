@@ -6,7 +6,7 @@ import com.example.bubblebitoey.sw_specebook.api.builder.BookBuilder;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
-import com.example.bubblebitoey.sw_specebook.view.BookListView;
+import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,9 +41,8 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 	
 	@Override
 	protected void onPostExecute(Void voids) {
-		view.sort(Operation.Type.TITLE);
+		view.sort(Operation.Type.Title);
 		view.removeProgress();
-		view.search(true);
 	}
 	
 	@Override

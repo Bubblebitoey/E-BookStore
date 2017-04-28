@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.view.UserView;
+import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
 
 import java.io.Serializable;
 import java.util.*;

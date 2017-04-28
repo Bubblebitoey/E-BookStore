@@ -3,6 +3,7 @@ package com.example.bubblebitoey.sw_specebook.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ import java.util.*;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> {
-	private final Filter FILTER_BY_TITLE = new IFilter(Operation.Type.TITLE);
-	private final Filter FILTER_BY_YEAR = new IFilter(Operation.Type.YEAR);
+	private final Filter FILTER_BY_ID = new IFilter(Operation.Type.ID);
+	private final Filter FILTER_BY_TITLE = new IFilter(Operation.Type.Title);
+	private final Filter FILTER_BY_YEAR = new IFilter(Operation.Type.Year);
+	private final Filter FILTER_BY_PRICE = new IFilter(Operation.Type.Price);
 	
 	private static final String TAG = "Adapter";
 	private Books booksOriginal;
@@ -75,11 +78,20 @@ public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> 
 	
 	public void setFilter(Operation.Type type) {
 		switch (type) {
-			case TITLE:
+			case ID:
+				this.f = FILTER_BY_ID;
+				break;
+			case Title:
 				this.f = FILTER_BY_TITLE;
 				break;
-			case YEAR:
+			case Year:
 				this.f = FILTER_BY_YEAR;
+				break;
+			case Price:
+				this.f = FILTER_BY_PRICE;
+				break;
+			default:
+				this.f = FILTER_BY_TITLE;
 				break;
 		}
 	}
@@ -98,10 +110,10 @@ public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> 
 	}
 	
 	@Override
-	public Void filter(Operation.Type type, String s) {
+	public synchronized Void filter(Operation.Type type, String s) {
 		setFilter(type);
+		Log.d("Filter Type", IFilter.class.cast(getFilter()).type.name());
 		getFilter().filter(s);
-		
 		return null;
 	}
 	
@@ -120,24 +132,25 @@ public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> 
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults filterResult = new FilterResults();
-			if (constraint == null || constraint.length() == 0) {
-				synchronized (this) {
+			synchronized (this) {
+				if (constraint == null || constraint.length() == 0) {
 					filterResult.values = booksOriginal;
 					filterResult.count = booksOriginal.size();
+					
+				} else {
+					Books result = booksOriginal.filter(type, String.valueOf(constraint));
+					filterResult.values = result;
+					filterResult.count = result.size();
 				}
-			} else {
-				Books result = booksOriginal.filter(type, String.valueOf(constraint));
-				filterResult.values = result;
-				filterResult.count = result.size();
 			}
 			return filterResult;
 		}
 		
 		@Override
 		protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-			booksCurrent = (Books) filterResults.values;
-			clear();
 			synchronized (this) {
+				booksCurrent = (Books) filterResults.values;
+				clear();
 				addAll(booksCurrent.getBooks());
 			}
 		}

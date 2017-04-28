@@ -9,7 +9,7 @@ import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.view.BookListView;
+import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 import com.example.bubblebitoey.sw_specebook.view.BookDetailActivity;
 import com.example.bubblebitoey.sw_specebook.view.UserDetailActivity;
 
@@ -19,7 +19,6 @@ import java.util.*;
 /**
  * Created by kamontat on 4/27/2017 AD.
  */
-
 public class MainPresenter implements ViewPresenter<BookListView> {
 	public static final int CALL_USER_ACTIVITY = 1000;
 	private BookListView view;
@@ -32,6 +31,12 @@ public class MainPresenter implements ViewPresenter<BookListView> {
 	
 	public void loadData() {
 		store.loadBook();
+	}
+	
+	private void setDropdown() {
+		view.setOption();
+		view.setOptionEvent();
+		view.setSearchEvent();
 	}
 	
 	private void setOnClick() {
@@ -79,6 +84,7 @@ public class MainPresenter implements ViewPresenter<BookListView> {
 	public void presenterSetting() {
 		loadData();
 		setOnClick();
+		setDropdown();
 	}
 	
 	@Override
