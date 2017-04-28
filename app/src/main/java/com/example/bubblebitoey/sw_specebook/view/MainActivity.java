@@ -17,8 +17,8 @@ import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
+import com.example.bubblebitoey.sw_specebook.model.mock.MockupStore;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.model.real.RealStore;
 import com.example.bubblebitoey.sw_specebook.presenter.MainPresenter;
 import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
 		
 		books = new Books();
-		presenter = (MainPresenter) new MainPresenter(new RealStore().setView(this)).setView(this);
+		presenter = (MainPresenter) new MainPresenter(new MockupStore().setView(this)).setView(this);
 	}
 	
 	@Override
@@ -153,11 +153,11 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 			
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (!s.toString().isEmpty()) {
-					if (Character.isDigit(s.toString().charAt(0))) gridAdapter.setFilter(Operation.Type.YEAR);
-					else gridAdapter.setFilter(Operation.Type.TITLE);
-				}
-				gridAdapter.getFilter().filter(s.toString());
+				if (s == null || s.toString().length() == 0) // if empty
+					gridAdapter.filter(Operation.Type.TITLE, "");
+				else if (Character.isDigit(s.toString().charAt(0))) // if digit
+					gridAdapter.filter(Operation.Type.YEAR, s.toString());
+				else gridAdapter.filter(Operation.Type.TITLE, s.toString()); // if title
 			}
 		});
 	}
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 	
 	@Override
 	public void sort(Operation.Type type) {
-		gridAdapter.sort(Operation.SortingBook.GET.by(type));
+		gridAdapter.sort(new Operation.SortingBook().by(type));
 	}
 	
 	@Override
