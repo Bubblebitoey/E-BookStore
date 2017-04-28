@@ -12,18 +12,23 @@
         tools:context="com.example.bubblebitoey.sw_specebook.view.MainActivity"
         android:orientation="vertical">
 
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"/>
+
+    <EditText
+            android:id="@+id/search_bar"
+            android:hint="@string/searching_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
     <ProgressBar
             android:id="@+id/progress"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-    <EditText
-            android:id="@+id/search_bar"
-            android:hint="@string/searching"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
 
     <GridView
             android:id="@+id/gridView"
