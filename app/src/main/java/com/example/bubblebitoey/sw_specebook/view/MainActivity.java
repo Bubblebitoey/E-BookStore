@@ -14,9 +14,9 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.model.real.RealStore;
 import com.example.bubblebitoey.sw_specebook.presenter.MainPresenter;
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 	
 	@Override
 	public void addNewBook(final Book book) {
-		books.add(book);
+		books.addNewBook(book);
 		setBook(book);
 	}
 	
@@ -154,8 +154,8 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 			@Override
 			public void afterTextChanged(Editable s) {
 				if (!s.toString().isEmpty()) {
-					if (Character.isDigit(s.toString().charAt(0))) gridAdapter.setFilter(Store.OperationType.YEAR);
-					else gridAdapter.setFilter(Store.OperationType.TITLE);
+					if (Character.isDigit(s.toString().charAt(0))) gridAdapter.setFilter(Operation.Type.YEAR);
+					else gridAdapter.setFilter(Operation.Type.TITLE);
 				}
 				gridAdapter.getFilter().filter(s.toString());
 			}
@@ -163,13 +163,37 @@ public class MainActivity extends AppCompatActivity implements BookListView {
 	}
 	
 	@Override
-	public void sort(Comparator<Book> compare) {
-		gridAdapter.sort(compare);
+	public void sort(Comparator<Book> comparator) {
+		gridAdapter.sort(comparator);
 	}
 	
 	@Override
-	public void filter(Store.OperationType type, String text) {
-		gridAdapter.setFilter(type);
-		gridAdapter.getFilter().filter(text);
+	public void sort(Operation.Type type) {
+		gridAdapter.sort(Operation.SortingBook.GET.by(type));
+	}
+	
+	@Override
+	public void addAll(Books books) {
+		synchronized (this) {
+			for (Book b : books.getBooks()) {
+				addNewBook(b);
+			}
+		}
+	}
+	
+	@Override
+	public void clear() {
+		books.clear();
+		gridAdapter.clear();
+	}
+	
+	@Override
+	public Book getBook(int pos) {
+		return books.getBook(pos);
+	}
+	
+	@Override
+	public void filter(Operation.Type type, String text) {
+		gridAdapter.filter(type, text);
 	}
 }
