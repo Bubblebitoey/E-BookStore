@@ -11,9 +11,10 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.raw.Store;
+import com.example.bubblebitoey.sw_specebook.model.raw.Filterable;
 
 import java.io.IOException;
 import java.util.*;
@@ -21,9 +22,9 @@ import java.util.*;
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
-public class GridAdapter extends ArrayAdapter<Book> {
-	private final Filter FILTER_BY_TITLE = new IFilter(Store.OperationType.TITLE);
-	private final Filter FILTER_BY_YEAR = new IFilter(Store.OperationType.YEAR);
+public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> {
+	private final Filter FILTER_BY_TITLE = new IFilter(Operation.Type.TITLE);
+	private final Filter FILTER_BY_YEAR = new IFilter(Operation.Type.YEAR);
 	
 	private static final String TAG = "Adapter";
 	private Books booksOriginal;
@@ -43,8 +44,8 @@ public class GridAdapter extends ArrayAdapter<Book> {
 	@Override
 	public synchronized void add(Book object) {
 		super.add(object);
-		booksCurrent.add(object);
-		booksOriginal.add(object);
+		booksCurrent.addNewBook(object);
+		booksOriginal.addNewBook(object);
 	}
 	
 	@Override
@@ -72,7 +73,7 @@ public class GridAdapter extends ArrayAdapter<Book> {
 		return row;
 	}
 	
-	public void setFilter(Store.OperationType type) {
+	public void setFilter(Operation.Type type) {
 		switch (type) {
 			case TITLE:
 				this.f = FILTER_BY_TITLE;
@@ -96,15 +97,23 @@ public class GridAdapter extends ArrayAdapter<Book> {
 		return f;
 	}
 	
+	@Override
+	public Void filter(Operation.Type type, String s) {
+		setFilter(type);
+		getFilter().filter(s);
+		
+		return null;
+	}
+	
 	private static class ViewHolder {
 		TextView title;
 		ImageView image;
 	}
 	
 	private class IFilter extends Filter {
-		private Store.OperationType type;
+		private Operation.Type type;
 		
-		private IFilter(Store.OperationType type) {
+		private IFilter(Operation.Type type) {
 			this.type = type;
 		}
 		
