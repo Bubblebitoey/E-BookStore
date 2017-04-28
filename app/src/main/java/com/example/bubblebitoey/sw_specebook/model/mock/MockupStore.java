@@ -26,6 +26,6 @@ public class MockupStore implements Store {
 		
 		view.removeProgress();
 		view.search(true);
-		// view.filter(OperationType.YEAR, "2001");
+		// view.filter(OperationToList.YEAR, "2001");
 	}
 }
