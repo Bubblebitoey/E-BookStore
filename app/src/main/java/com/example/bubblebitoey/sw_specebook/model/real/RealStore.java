@@ -1,9 +1,9 @@
 package com.example.bubblebitoey.sw_specebook.model.real;
 
 import android.os.AsyncTask;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.api.builder.BookBuilder;
 import com.example.bubblebitoey.sw_specebook.api.Internet;
-import com.example.bubblebitoey.sw_specebook.api.Sorting;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.view.BookListView;
@@ -41,7 +41,7 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 	
 	@Override
 	protected void onPostExecute(Void voids) {
-		view.sort(new Sorting.ByTitle());
+		view.sort(Operation.Type.TITLE);
 		view.removeProgress();
 		view.search(true);
 	}
