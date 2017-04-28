@@ -1,4 +1,4 @@
-package com.example.bubblebitoey.sw_specebook.view;
+package com.example.bubblebitoey.sw_specebook.view.raw;
 
 import android.content.Context;
 import android.graphics.Bitmap;

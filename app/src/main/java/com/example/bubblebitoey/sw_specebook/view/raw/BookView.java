@@ -1,4 +1,4 @@
-package com.example.bubblebitoey.sw_specebook.view;
+package com.example.bubblebitoey.sw_specebook.view.raw;
 
 import com.example.bubblebitoey.sw_specebook.model.Book;
 

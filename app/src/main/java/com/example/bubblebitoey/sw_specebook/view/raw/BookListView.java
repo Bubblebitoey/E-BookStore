@@ -1,4 +1,4 @@
-package com.example.bubblebitoey.sw_specebook.view;
+package com.example.bubblebitoey.sw_specebook.view.raw;
 
 import android.widget.AdapterView;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
@@ -11,15 +11,13 @@ import java.util.*;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public interface BookListView extends BookView, Booklist {
+public interface BookListView extends BookView, Booklist, SearchView {
 	
 	void setMaxProgress(int max);
 	
 	void updateProgress(int current);
 	
 	void removeProgress();
-	
-	void search(boolean enable);
 	
 	void sort(Operation.Type type);
 	
