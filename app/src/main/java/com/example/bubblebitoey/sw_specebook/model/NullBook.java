@@ -17,12 +17,12 @@ public class NullBook extends Book {
 	}
 	
 	@Override
-	public boolean isSameYear(String year) {
+	public boolean isMatchYear(String year) {
 		return false;
 	}
 	
 	@Override
-	public boolean isSameTitle(String title) {
+	public boolean isMatchTitle(String title) {
 		return false;
 	}
 }
