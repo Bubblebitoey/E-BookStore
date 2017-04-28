@@ -83,16 +83,24 @@ public class Book implements Serializable {
 		return year;
 	}
 	
-	public boolean isSameYear(String year) {
+	public boolean isMatchYear(String year) {
 		return this.getYear().startsWith(year.toLowerCase(Locale.ENGLISH));
 	}
 	
-	public boolean isSameTitle(String title) {
+	public boolean isMatchTitle(String title) {
 		String[] words = this.getTitle().split(" ");
 		for (String word : words) {
 			if (word.startsWith(title.toLowerCase(Locale.ENGLISH))) return true;
 		}
 		return false;
+	}
+	
+	public boolean isMatchPrice(String price) {
+		return String.valueOf(this.price).startsWith(price);
+	}
+	
+	public boolean isMatchPrice(double price) {
+		return isMatchPrice(String.valueOf(price));
 	}
 	
 	@Override
