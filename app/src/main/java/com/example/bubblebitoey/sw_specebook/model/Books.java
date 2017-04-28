@@ -1,6 +1,8 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
-import com.example.bubblebitoey.sw_specebook.model.raw.Store;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
+import com.example.bubblebitoey.sw_specebook.model.raw.Booklist;
+import com.example.bubblebitoey.sw_specebook.model.raw.Filterable;
 
 import java.io.Serializable;
 import java.util.*;
@@ -9,22 +11,32 @@ import java.util.*;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class Books implements Serializable {
+public class Books implements Serializable, Booklist, Filterable<Books> {
+	private static Operation.FilteringBook filter;
 	private long serialVersionUID = 0L;
 	private List<Book> books;
 	
 	public Books(Book... book) {
+		filter = new Operation.FilteringBook("");
 		this.books = new ArrayList<>(Arrays.asList(book));
 	}
 	
-	public void add(Book book) {
+	@Override
+	public void addNewBook(Book book) {
 		books.add(book);
 	}
 	
+	@Override
 	public void addAll(Books books) {
 		this.books.addAll(books.getBooks());
 	}
 	
+	@Override
+	public void clear() {
+		this.books.clear();
+	}
+	
+	@Override
 	public Book getBook(int pos) {
 		try {
 			return books.get(pos);
@@ -34,31 +46,29 @@ public class Books implements Serializable {
 	}
 	
 	public List<Book> getBooks() {
-		return books;
+		return books.subList(0, books.size());
 	}
 	
 	public int size() {
 		return books.size();
 	}
 	
-	public void sort(Comparator<? super Book> compare) {
-		Collections.sort(books, compare);
+	public void sort(Comparator<? super Book> comparator) {
+		Collections.sort(books, comparator);
 	}
 	
-	public Books filter(Store.OperationType type, String str) {
+	@Override
+	public void sort(Operation.Type type) {
+		sort(Operation.SortingBook.GET.by(type));
+	}
+	
+	@Override
+	public Books filter(Operation.Type type, String str) {
+		filter.updateText(str);
 		Books newBooks = new Books();
-		switch (type) {
-			case TITLE:
-				for (Book b : books) {
-					if (b.isSameTitle(str)) newBooks.add(b);
-				}
-				return newBooks;
-			case YEAR:
-				for (Book b : books) {
-					if (b.isSameYear(str)) newBooks.add(b);
-				}
-				return newBooks;
+		for (Book b : books) {
+			if (filter.by(type).apply(b)) newBooks.addNewBook(b);
 		}
-		return new Books();
+		return newBooks;
 	}
 }
