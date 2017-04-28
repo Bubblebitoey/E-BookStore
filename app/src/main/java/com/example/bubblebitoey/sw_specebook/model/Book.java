@@ -2,6 +2,7 @@ package com.example.bubblebitoey.sw_specebook.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,8 +84,22 @@ public class Book implements Serializable {
 		return year;
 	}
 	
-	public boolean isMatchYear(String year) {
-		return this.getYear().startsWith(year.toLowerCase(Locale.ENGLISH));
+	public boolean isMatch(Operation.Type type, String str) {
+		switch (type) {
+			case ID:
+				return isMatchID(str);
+			case TITLE:
+				return isMatchTitle(str);
+			case YEAR:
+				return isMatchYear(str);
+			case PRICE:
+				return isMatchPrice(str);
+		}
+		return false;
+	}
+	
+	public boolean isMatchID(String id) {
+		return this.getId().startsWith(id);
 	}
 	
 	public boolean isMatchTitle(String title) {
@@ -93,6 +108,10 @@ public class Book implements Serializable {
 			if (word.startsWith(title.toLowerCase(Locale.ENGLISH))) return true;
 		}
 		return false;
+	}
+	
+	public boolean isMatchYear(String year) {
+		return this.getYear().startsWith(year);
 	}
 	
 	public boolean isMatchPrice(String price) {

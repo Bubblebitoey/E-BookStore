@@ -1,5 +1,6 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
+import com.android.internal.util.Predicate;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.model.raw.Booklist;
 import com.example.bubblebitoey.sw_specebook.model.raw.Filterable;
@@ -17,7 +18,7 @@ public class Books implements Serializable, Booklist, Filterable<Books> {
 	private List<Book> books;
 	
 	public Books(Book... book) {
-		filter = new Operation.FilteringBook("");
+		filter = new Operation.FilteringBook();
 		this.books = new ArrayList<>(Arrays.asList(book));
 	}
 	
@@ -59,15 +60,16 @@ public class Books implements Serializable, Booklist, Filterable<Books> {
 	
 	@Override
 	public void sort(Operation.Type type) {
-		sort(Operation.SortingBook.GET.by(type));
+		sort(new Operation.SortingBook().by(type));
 	}
 	
 	@Override
 	public Books filter(Operation.Type type, String str) {
-		filter.updateText(str);
+		filter.update(str);
+		Predicate<Book> predicate = filter.by(type);
 		Books newBooks = new Books();
 		for (Book b : books) {
-			if (filter.by(type).apply(b)) newBooks.addNewBook(b);
+			if (predicate.apply(b)) newBooks.addNewBook(b);
 		}
 		return newBooks;
 	}
