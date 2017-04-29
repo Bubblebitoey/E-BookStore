@@ -26,4 +26,6 @@ public interface BookListPresenter extends ViewPresenter<BookListView> {
 	void sort(Operation.Type type);
 	
 	void filter(Operation.Type type, String str);
+	
+	void notifyWhenDataSetChange();
 }
