@@ -25,7 +25,9 @@
                 android:name=".view.BookDetailActivity"
                 android:label="@string/book_detail">
         </activity>
-        <activity android:name=".view.TestActivity">
+        <activity
+                android:name=".view.UserBookListActivity"
+                android:label="@string/book_list">
         </activity>
     </application>
 
