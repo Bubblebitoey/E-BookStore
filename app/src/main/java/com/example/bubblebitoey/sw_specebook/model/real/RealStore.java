@@ -1,12 +1,13 @@
 package com.example.bubblebitoey.sw_specebook.model.real;
 
 import android.os.AsyncTask;
+import android.util.Log;
+import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.api.builder.BookBuilder;
-import com.example.bubblebitoey.sw_specebook.api.Internet;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
-import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
+import com.example.bubblebitoey.sw_specebook.presenter.BookListPresenter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,20 +19,24 @@ import java.io.IOException;
  */
 
 public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
-	private BookListView view;
+	private BookListPresenter presenter;
+	
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		presenter.startLoading();
+	}
 	
 	@Override
 	protected Void doInBackground(Void... params) {
 		JSONArray a = Internet.fetchData();
-		view.setMaxProgress(a.length());
-		
+		presenter.setBookNumber(a.length());
 		try {
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject o = a.getJSONObject(i);
 				Book b = BookBuilder.createBook(o).fetchImage();
-				view.addNewBook(b);
-				view.updateProgress(i + 1);
-				System.out.println("fetch (" + (i + 1) + "/" + a.length() + ")");
+				presenter.addBook(b, i + 1);
+				Log.i("FETCH BOOKS", "(" + (i + 1) + "/" + a.length() + ")");
 			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
@@ -41,13 +46,13 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 	
 	@Override
 	protected void onPostExecute(Void voids) {
-		view.sort(Operation.Type.Title);
-		view.removeProgress();
+		presenter.sort(Operation.Type.Title);
+		presenter.endLoading();
 	}
 	
 	@Override
-	public Store setView(BookListView view) {
-		this.view = view;
+	public Store setPresenter(BookListPresenter presenter) {
+		this.presenter = presenter;
 		return this;
 	}
 	
