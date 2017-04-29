@@ -3,10 +3,11 @@ package com.example.bubblebitoey.sw_specebook.model.mock;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
 import com.example.bubblebitoey.sw_specebook.R;
+import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.Cart;
-import com.example.bubblebitoey.sw_specebook.model.NullBook;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 
 /**
@@ -14,11 +15,17 @@ import com.example.bubblebitoey.sw_specebook.model.raw.User;
  */
 
 public class MockupUser implements User {
-	private double money = 1000;
+	private String name;
+	private double money;
+	
+	public MockupUser() {
+		name = "Mockup User";
+		money = 1000;
+	}
 	
 	@Override
 	public String getName() {
-		return "Mockup User";
+		return name;
 	}
 	
 	@Override
@@ -47,6 +54,27 @@ public class MockupUser implements User {
 	
 	@Override
 	public Books getOwnerBook() {
-		return new Books(new NullBook());
+		return Constants.getMockupBook();
 	}
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+	}
+	
+	public static final Creator<MockupUser> CREATOR = new Creator<MockupUser>() {
+		@Override
+		public MockupUser createFromParcel(Parcel in) {
+			return new MockupUser();
+		}
+		
+		@Override
+		public MockupUser[] newArray(int size) {
+			return new MockupUser[size];
+		}
+	};
 }

@@ -2,11 +2,12 @@ package com.example.bubblebitoey.sw_specebook.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 
@@ -14,10 +15,9 @@ import java.util.*;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class Book implements Serializable {
-	private long serialVersionUID = 0L;
+public class Book implements Parcelable {
 	private String id;
-	private transient Bitmap image;
+	private Bitmap image;
 	private String title;
 	private URL link;
 	private double price;
@@ -34,6 +34,26 @@ public class Book implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	protected Book(Parcel in) {
+		id = in.readString();
+		image = in.readParcelable(Bitmap.class.getClassLoader());
+		title = in.readString();
+		price = in.readDouble();
+		year = in.readString();
+	}
+	
+	public static final Creator<Book> CREATOR = new Creator<Book>() {
+		@Override
+		public Book createFromParcel(Parcel in) {
+			return new Book(in);
+		}
+		
+		@Override
+		public Book[] newArray(int size) {
+			return new Book[size];
+		}
+	};
 	
 	public String getId() {
 		return id;
@@ -65,6 +85,10 @@ public class Book implements Serializable {
 	
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public boolean haveImage() {
+		return image != null;
 	}
 	
 	public Book fetchImage() throws IOException {
@@ -125,5 +149,19 @@ public class Book implements Serializable {
 	@Override
 	public String toString() {
 		return "Book{" + "id='" + id + '\'' + ", image=" + image + ", title='" + title + '\'' + ", link=" + link + ", price=" + price + ", year='" + year + '\'' + '}';
+	}
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(id);
+		parcel.writeParcelable(image, i);
+		parcel.writeString(title);
+		parcel.writeDouble(price);
+		parcel.writeString(year);
 	}
 }

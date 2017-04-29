@@ -1,26 +1,46 @@
 package com.example.bubblebitoey.sw_specebook.model;
 
+import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 import com.android.internal.util.Predicate;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
-import com.example.bubblebitoey.sw_specebook.model.raw.Booklist;
+import com.example.bubblebitoey.sw_specebook.model.raw.BookList;
 import com.example.bubblebitoey.sw_specebook.model.raw.Filterable;
+import com.example.bubblebitoey.sw_specebook.presenter.BookListPresenter;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.*;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class Books implements Serializable, Booklist, Filterable<Books> {
+public class Books extends AsyncTask<BookListPresenter, Void, Books> implements Parcelable, BookList, Filterable<Books> {
 	private static Operation.FilteringBook filter;
-	private long serialVersionUID = 0L;
 	private List<Book> books;
 	
 	public Books(Book... book) {
 		filter = new Operation.FilteringBook();
 		this.books = new ArrayList<>(Arrays.asList(book));
 	}
+	
+	protected Books(Parcel in) {
+		books = in.createTypedArrayList(Book.CREATOR);
+	}
+	
+	public static final Creator<Books> CREATOR = new Creator<Books>() {
+		@Override
+		public Books createFromParcel(Parcel in) {
+			return new Books(in);
+		}
+		
+		@Override
+		public Books[] newArray(int size) {
+			return new Books[size];
+		}
+	};
 	
 	@Override
 	public void addNewBook(Book book) {
@@ -79,5 +99,30 @@ public class Books implements Serializable, Booklist, Filterable<Books> {
 			}
 		}
 		return newBooks;
+	}
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeTypedList(books);
+	}
+	
+	@Override
+	protected Books doInBackground(BookListPresenter... presenters) {
+		BookListPresenter presenter1 = presenters[0];
+		Log.d("Books", Arrays.toString(books.toArray()));
+		for (Book b : books) {
+			try {
+				if (!b.haveImage()) b.fetchImage();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		presenter1.notifyWhenDataSetChange();
+		return this;
 	}
 }
