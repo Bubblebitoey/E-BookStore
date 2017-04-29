@@ -4,6 +4,8 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="about">About</string>
+    <string name="about_title">About this app</string>
+    <string name="ok_message">OK</string>
     <string name="title_activity_user_detail">User</string>
     <string name="book_detail">Name</string>
     <string name="book_list">Book List</string>
