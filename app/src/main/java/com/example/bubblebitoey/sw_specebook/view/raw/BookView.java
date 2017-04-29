@@ -7,5 +7,5 @@ import com.example.bubblebitoey.sw_specebook.model.Book;
  */
 
 public interface BookView extends View {
-	void setBook(Book book);
+	void setBook(final Book book);
 }

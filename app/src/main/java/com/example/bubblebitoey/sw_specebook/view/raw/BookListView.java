@@ -17,6 +17,8 @@ public interface BookListView extends BookView, Booklist, SearchView {
 	
 	void updateProgress(int current);
 	
+	void createProgress();
+	
 	void removeProgress();
 	
 	void sort(Operation.Type type);
