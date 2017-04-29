@@ -3,6 +3,7 @@ package com.example.bubblebitoey.sw_specebook.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
-import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
-import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
+import com.example.bubblebitoey.sw_specebook.api.view.PassingActivity;
 import com.example.bubblebitoey.sw_specebook.presenter.UserPresenter;
 import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
 
-import java.io.Serializable;
 import java.util.*;
 
 public class UserDetailActivity extends AppCompatActivity implements UserView {
@@ -34,15 +32,13 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_detail);
 		
-		User user = UserFactory.getInstance().getUser();
-		
 		image = (ImageView) findViewById(R.id.user_image);
 		userText = (TextView) findViewById(R.id.name);
 		money = (TextView) findViewById(R.id.amount);
 		myBooks = (Button) findViewById(R.id.myBooks);
 		
 		
-		presenter = new UserPresenter(this, user);
+		presenter = (UserPresenter) new UserPresenter().setView(this);
 		alert = presenter.getAlertDialog(this);
 		
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -80,12 +76,12 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	}
 	
 	@Override
-	public void to(Map<String, Serializable> data, Class nextActivity) {
+	public void to(Map<String, Parcelable> data, Class nextActivity) {
 		PassingActivity.newActivity(data, this, nextActivity);
 	}
 	
 	@Override
-	public void login(User u) {
+	public void login() {
 		// do nothing
 	}
 	
@@ -105,7 +101,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	}
 	
 	@Override
-	public void toAndWait(int code, Map<String, Serializable> data, Class nextActivity) {
+	public void toAndWait(int code, Map<String, Parcelable> data, Class nextActivity) {
 		PassingActivity.newActivityWithResult(code, data, this, nextActivity);
 	}
 }

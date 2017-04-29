@@ -1,6 +1,5 @@
 package com.example.bubblebitoey.sw_specebook.presenter;
 
-import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.view.raw.View;
 
 /**
@@ -11,7 +10,7 @@ public interface ViewPresenter<T extends View> {
 	
 	void presenterSetting();
 	
-	void login(User u);
+	void login();
 	
 	void logout();
 }
