@@ -1,14 +1,48 @@
 package com.example.bubblebitoey.sw_specebook.model.mock;
 
+import android.os.AsyncTask;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
+import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.presenter.BookListPresenter;
+
+import java.io.IOException;
 
 /**
  * Created by bubblebitoey on 4/26/2017 AD.
  */
-public class MockupStore implements Store {
+public class MockupStore extends AsyncTask<Void, Void, Void> implements Store {
 	private BookListPresenter presenter;
+	
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		presenter.startLoading();
+	}
+	
+	@Override
+	protected Void doInBackground(Void... voids) {
+		Books books = Constants.getMockupBook();
+		presenter.setBookNumber(books.size());
+		
+		for (Book b : books.getBooks()) {
+			try {
+				presenter.addBook(b.fetchImage());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	protected void onPostExecute(Void aVoid) {
+		super.onPostExecute(aVoid);
+		presenter.sort(Operation.Type.Title);
+		presenter.endLoading();
+	}
 	
 	@Override
 	public Store setPresenter(BookListPresenter presenter) {
@@ -18,13 +52,7 @@ public class MockupStore implements Store {
 	
 	@Override
 	public void loadBook() {
-		presenter.addBook(new Book("1003", "name2", "https://imagery.pragprog.com/products/504/jwdsal_largebeta.jpg", 10.51, "2011"));
-		presenter.addBook(new Book("1005", "name3", "https://imagery.pragprog.com/products/504/jwdsal_largebeta.jpg", 13.12, "1199"));
-		presenter.addBook(new Book("1100", "name4", "https://imagery.pragprog.com/products/504/jwdsal_largebeta.jpg", 15.11, "1991"));
-		presenter.addBook(new Book("1011", "name5", "https://imagery.pragprog.com/products/504/jwdsal_largebeta.jpg", 41.15, "2015"));
-		presenter.addBook(new Book("1100", "name1", "https://imagery.pragprog.com/products/504/jwdsal_largebeta.jpg", 21.11, "2001"));
-		
-		presenter.endLoading();
+		execute();
 		// view.filter(OperationToList.Year, "2001");
 	}
 }

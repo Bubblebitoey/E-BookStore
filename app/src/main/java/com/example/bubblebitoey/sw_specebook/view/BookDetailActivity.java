@@ -15,7 +15,7 @@ public class BookDetailActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_book_detail);
-		Book b = (Book) getIntent().getSerializableExtra("book");
+		Book b = getIntent().getParcelableExtra("book");
 		new FetchImage().execute();
 		
 		if (getActionBar() != null) getActionBar().setTitle(b.getTitle());

@@ -3,14 +3,14 @@ package com.example.bubblebitoey.sw_specebook.view.raw;
 import android.widget.AdapterView;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.model.Book;
-import com.example.bubblebitoey.sw_specebook.model.raw.Booklist;
+import com.example.bubblebitoey.sw_specebook.model.raw.BookList;
 
 import java.util.*;
 
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
-public interface BookListView extends BookView, Booklist, SearchView {
+public interface BookListView extends BookView, BookList, SearchView {
 	
 	void notifyOnChange();
 	
