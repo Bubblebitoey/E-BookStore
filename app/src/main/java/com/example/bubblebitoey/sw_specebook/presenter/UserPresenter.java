@@ -13,7 +13,6 @@ import java.util.*;
 /**
  * Created by kamontat on 4/27/2017 AD.
  */
-
 public class UserPresenter {
 	private static final CharSequence[] c = new CharSequence[]{"10฿", "100฿", "500฿", "1000฿"};
 	private UserView view;

@@ -1,17 +1,15 @@
 package com.example.bubblebitoey.sw_specebook.presenter;
 
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import com.example.bubblebitoey.sw_specebook.R;
-import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
+import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.model.Book;
+import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.raw.Store;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 import com.example.bubblebitoey.sw_specebook.view.BookDetailActivity;
-import com.example.bubblebitoey.sw_specebook.view.UserDetailActivity;
+import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 
 import java.io.Serializable;
 import java.util.*;
@@ -19,7 +17,7 @@ import java.util.*;
 /**
  * Created by kamontat on 4/27/2017 AD.
  */
-public class MainPresenter implements ViewPresenter<BookListView> {
+public class MainPresenter implements BookListPresenter {
 	public static final int CALL_USER_ACTIVITY = 1000;
 	private BookListView view;
 	private Store store;
@@ -27,6 +25,7 @@ public class MainPresenter implements ViewPresenter<BookListView> {
 	
 	public MainPresenter(Store store) {
 		this.store = store;
+		store.setPresenter(this);
 	}
 	
 	public void loadData() {
@@ -51,28 +50,6 @@ public class MainPresenter implements ViewPresenter<BookListView> {
 		});
 	}
 	
-	public void menuClick(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.login:
-				login(UserFactory.getInstance().createMockUser()); // TODO: 4/27/2017 AD change to non mock
-				view.login(user);
-				break;
-			case R.id.user:
-				view.toAndWait(CALL_USER_ACTIVITY, UserDetailActivity.class);
-				break;
-			case R.id.logout:
-				logout();
-				view.logout();
-				break;
-			case R.id.about:
-				// show about app // TODO: 4/27/2017 AD about page
-				break;
-			default:
-				
-				break;
-		}
-	}
-	
 	@Override
 	public ViewPresenter setView(BookListView view) {
 		this.view = view;
@@ -89,11 +66,55 @@ public class MainPresenter implements ViewPresenter<BookListView> {
 	
 	@Override
 	public void login(User user) {
-		if (this.user == null) this.user = user;
+		if (this.user == null && user != null) {
+			this.user = user;
+			view.login(user);
+		}
 	}
 	
 	@Override
 	public void logout() {
 		user = null;
+	}
+	
+	@Override
+	public void addBook(Book b) {
+		view.addNewBook(b);
+	}
+	
+	@Override
+	public void addBook(Book b, int number) {
+		view.addNewBook(b);
+		view.updateProgress(number);
+	}
+	
+	@Override
+	public void addBooks(Books b) {
+		view.addAll(b);
+	}
+	
+	@Override
+	public void setBookNumber(int number) {
+		view.setMaxProgress(number);
+	}
+	
+	@Override
+	public void startLoading() {
+		view.createProgress();
+	}
+	
+	@Override
+	public void endLoading() {
+		view.removeProgress();
+	}
+	
+	@Override
+	public void sort(Operation.Type type) {
+		view.sort(type);
+	}
+	
+	@Override
+	public void filter(Operation.Type type, String str) {
+		view.filter(type, str);
 	}
 }
