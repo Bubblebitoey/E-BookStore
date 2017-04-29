@@ -1,27 +1,29 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
+import com.example.bubblebitoey.sw_specebook.api.view.PassingActivity;
+import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.model.real.RealStore;
 import com.example.bubblebitoey.sw_specebook.presenter.BookListPresenter;
-import com.example.bubblebitoey.sw_specebook.presenter.MainPresenter;
-import com.example.bubblebitoey.sw_specebook.presenter.PassingActivity;
 import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 
-import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.Executors;
 
 import static com.example.bubblebitoey.sw_specebook.presenter.MainPresenter.CALL_USER_ACTIVITY;
 
@@ -42,6 +44,11 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	private Books books;
 	private Operation.Type type;
 	
+	public BookListActivity(BookListPresenter presenter) {
+		this.presenter = presenter;
+		books = new Books();
+	}
+	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,10 +61,9 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 		searchBar = (EditText) findViewById(R.id.search_bar);
 		spinner = (Spinner) findViewById(R.id.spinner);
 		
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
+		presenter.setView(this);
 		
-		books = new Books();
-		presenter = (MainPresenter) new MainPresenter(new RealStore()).setView(this);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
 	}
 	
 	@Override
@@ -73,20 +79,30 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.login:
-				presenter.login(UserFactory.getInstance().createMockUser());// TODO: 4/27/2017 AD change to non mock
+				UserFactory.getInstance().createMockUser(); // TODO: 4/27/2017 AD change to non mock
+				login();
 				break;
 			case R.id.user:
 				toAndWait(CALL_USER_ACTIVITY, UserDetailActivity.class);
 				break;
 			case R.id.logout:
 				logout();
-				logout();
 				break;
 			case R.id.about:
-				// show about app // TODO: 4/27/2017 AD about page
+				new MaterialDialog.Builder(this).title(String.format("%s v%s", getResources().getString(R.string.about_title), Constants.version)).content("Develop by").items(Constants.developerName).itemsCallback(new MaterialDialog.ListCallback() {
+					@Override
+					public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Constants.developerFacebook.get(which));
+						startActivity(browserIntent);
+					}
+				}).positiveText(R.string.ok_message).canceledOnTouchOutside(true).show();
 				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public BookListPresenter getPresenter() {
+		return presenter;
 	}
 	
 	@Override
@@ -102,6 +118,7 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 				Operation.Type t = (Operation.Type) adapterView.getItemAtPosition(i);
 				type = t;
 				setSearchPlaceHolder(t.name());
+				manualFilter();
 			}
 			
 			@Override
@@ -137,22 +154,30 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	}
 	
 	@Override
-	public void login(User u) {
-		menu.findItem(R.id.login).setVisible(false);
-		menu.findItem(R.id.user).setVisible(true);
-		menu.findItem(R.id.user).setTitle(u.getName());
-		menu.findItem(R.id.logout).setVisible(true);
+	public void login() {
+		User u = UserFactory.getInstance().getUser();
+		if (u == null) logout();
+		else {
+			menu.findItem(R.id.login).setVisible(false);
+			menu.findItem(R.id.user).setVisible(true);
+			menu.findItem(R.id.user).setTitle(u.getName());
+			menu.findItem(R.id.logout).setVisible(true);
+		}
 	}
 	
 	@Override
 	public void logout() {
-		menu.findItem(R.id.login).setVisible(true);
-		menu.findItem(R.id.user).setVisible(false);
-		menu.findItem(R.id.logout).setVisible(false);
+		User u = UserFactory.getInstance().getUser();
+		if (u != null) login();
+		else {
+			menu.findItem(R.id.login).setVisible(true);
+			menu.findItem(R.id.user).setVisible(false);
+			menu.findItem(R.id.logout).setVisible(false);
+		}
 	}
 	
 	@Override
-	public void to(Map<String, Serializable> data, Class nextActivity) {
+	public void to(Map<String, Parcelable> data, Class nextActivity) {
 		PassingActivity.newActivity(data, this, nextActivity);
 	}
 	
@@ -167,7 +192,7 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	}
 	
 	@Override
-	public void toAndWait(int code, Map<String, Serializable> data, Class nextActivity) {
+	public void toAndWait(int code, Map<String, Parcelable> data, Class nextActivity) {
 		PassingActivity.newActivityWithResult(code, data, this, nextActivity);
 	}
 	
@@ -189,7 +214,18 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 				addNewBook(b);
 				updateProgress(0);
 			}
+			books.executeOnExecutor(Executors.newSingleThreadExecutor(), presenter);
 		}
+	}
+	
+	@Override
+	public void notifyOnChange() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				gridAdapter.notifyDataSetChanged();
+			}
+		});
 	}
 	
 	@Override
