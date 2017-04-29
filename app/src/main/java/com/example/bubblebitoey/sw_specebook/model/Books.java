@@ -114,10 +114,17 @@ public class Books extends AsyncTask<BookListPresenter, Void, Books> implements 
 	@Override
 	protected Books doInBackground(BookListPresenter... presenters) {
 		BookListPresenter presenter1 = presenters[0];
-		Log.d("Books", Arrays.toString(books.toArray()));
+		// print format: fetch/current_read/all
+		int f = 0;
+		int c = 0;
 		for (Book b : books) {
 			try {
-				if (!b.haveImage()) b.fetchImage();
+				if (!b.haveImage()) {
+					b.fetchImage();
+					f++;
+				}
+				c++;
+				Log.i("FETCH IMAGE", String.format("(%d/%d/%d)", f, c, size()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
