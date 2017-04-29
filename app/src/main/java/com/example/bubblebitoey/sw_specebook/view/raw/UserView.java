@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 /**
  * Created by kamontat on 4/27/2017 AD.
  */
-
 public interface UserView extends View {
 	void setName(String name);
 	

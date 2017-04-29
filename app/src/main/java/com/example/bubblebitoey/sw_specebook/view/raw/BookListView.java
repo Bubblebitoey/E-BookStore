@@ -10,8 +10,9 @@ import java.util.*;
 /**
  * Created by bubblebitoey on 4/20/2017 AD.
  */
-
 public interface BookListView extends BookView, Booklist, SearchView {
+	
+	void notifyOnChange();
 	
 	void setMaxProgress(int max);
 	
