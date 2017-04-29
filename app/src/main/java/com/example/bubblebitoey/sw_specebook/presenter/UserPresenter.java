@@ -9,7 +9,7 @@ import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.view.MainActivity;
-import com.example.bubblebitoey.sw_specebook.view.TestActivity;
+import com.example.bubblebitoey.sw_specebook.view.UserBookListActivity;
 import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
 
 import java.util.*;
@@ -45,7 +45,7 @@ public class UserPresenter implements ViewPresenter<UserView> {
 			public void onClick(View v) {
 				Map<String, Parcelable> map = new HashMap<>();
 				map.put(Constants.USER, user);
-				view.to(map, TestActivity.class);
+				view.to(map, UserBookListActivity.class);
 			}
 		});
 	}

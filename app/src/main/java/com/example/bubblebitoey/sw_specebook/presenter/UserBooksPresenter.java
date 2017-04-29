@@ -1,5 +1,7 @@
 package com.example.bubblebitoey.sw_specebook.presenter;
 
+import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
+import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.view.MainActivity;
 import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 
@@ -9,12 +11,11 @@ import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
  * @since Sat 29/Apr/2017 - 12:31 PM
  */
 public class UserBooksPresenter extends AbstractBookListPresenter {
-	protected BookListView view;
 	
 	@Override
 	public ViewPresenter setView(BookListView view) {
-		this.view = view;
-		presenterSetting();
+		super.setView(view);
+		fetchBook();
 		return this;
 	}
 	
@@ -32,5 +33,15 @@ public class UserBooksPresenter extends AbstractBookListPresenter {
 	public void logout() {
 		super.logout();
 		view.to(MainActivity.class);
+	}
+	
+	@Override
+	public void fetchBook() {
+		view.createProgress();
+		User user = UserFactory.getInstance().getUser();
+		if (user != null) {
+			view.addAll(user.getOwnerBook());
+		}
+		view.removeProgress();
 	}
 }

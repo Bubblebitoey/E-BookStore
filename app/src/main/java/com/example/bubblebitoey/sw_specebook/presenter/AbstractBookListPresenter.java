@@ -108,4 +108,9 @@ public abstract class AbstractBookListPresenter implements BookListPresenter {
 	public void notifyWhenDataSetChange() {
 		view.notifyOnChange();
 	}
+	
+	@Override
+	public void clear() {
+		view.clear();
+	}
 }

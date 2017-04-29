@@ -8,7 +8,6 @@ import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
  */
 public class MainPresenter extends AbstractBookListPresenter {
 	public static final int CALL_USER_ACTIVITY = 1000;
-	private BookListView view;
 	private Store store;
 	
 	public MainPresenter(Store store) {
@@ -16,21 +15,16 @@ public class MainPresenter extends AbstractBookListPresenter {
 		store.setPresenter(this);
 	}
 	
-	public void loadData() {
+	@Override
+	public void fetchBook() {
 		store.loadBook();
 	}
 	
 	@Override
 	public ViewPresenter setView(BookListView view) {
-		this.view = view;
-		presenterSetting();
-		return this;
-	}
-	
-	@Override
-	public void presenterSetting() {
-		loadData();
-		super.presenterSetting();
+		ViewPresenter v = super.setView(view);
+		fetchBook();
+		return v;
 	}
 	
 	@Override

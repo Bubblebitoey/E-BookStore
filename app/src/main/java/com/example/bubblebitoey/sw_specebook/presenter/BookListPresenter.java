@@ -28,4 +28,8 @@ public interface BookListPresenter extends ViewPresenter<BookListView> {
 	void filter(Operation.Type type, String str);
 	
 	void notifyWhenDataSetChange();
+	
+	void fetchBook();
+	
+	void clear();
 }
