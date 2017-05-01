@@ -32,4 +32,6 @@ public interface BookListPresenter extends ViewPresenter<BookListView> {
 	void fetchBook();
 	
 	void clear();
+	
+	void refresh();
 }

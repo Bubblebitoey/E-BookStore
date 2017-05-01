@@ -113,4 +113,10 @@ public abstract class AbstractBookListPresenter implements BookListPresenter {
 	public void clear() {
 		view.clear();
 	}
+	
+	@Override
+	public void refresh() {
+		clear();
+		fetchBook();
+	}
 }

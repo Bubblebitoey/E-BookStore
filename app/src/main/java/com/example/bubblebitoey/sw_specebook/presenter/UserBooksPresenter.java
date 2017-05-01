@@ -31,6 +31,7 @@ public class UserBooksPresenter extends AbstractBookListPresenter {
 	
 	@Override
 	public void logout() {
+		UserFactory.getInstance().logout();
 		super.logout();
 		view.to(MainActivity.class);
 	}
