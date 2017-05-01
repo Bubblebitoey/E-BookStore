@@ -1,6 +1,5 @@
 package com.example.bubblebitoey.sw_specebook.view.raw;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 /**
@@ -16,6 +15,4 @@ public interface UserView extends View {
 	void setOwnerBookListButton(android.view.View.OnClickListener listener);
 	
 	void setImage(Bitmap bitmap);
-	
-	Context getContext();
 }
