@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -71,8 +72,16 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.topmenu, menu);
 		this.menu = menu;
-		logout();
+		UserFactory.getInstance().toggleView(this);
 		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean b = super.onPrepareOptionsMenu(menu);
+		Log.d("UPDATE", "Option Menu");
+		UserFactory.getInstance().toggleView(this);
+		return b;
 	}
 	
 	@Override

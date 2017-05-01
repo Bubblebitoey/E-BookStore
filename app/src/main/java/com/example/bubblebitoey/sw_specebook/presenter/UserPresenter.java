@@ -8,7 +8,6 @@ import android.view.View;
 import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
-import com.example.bubblebitoey.sw_specebook.view.MainActivity;
 import com.example.bubblebitoey.sw_specebook.view.UserBookListActivity;
 import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
 
@@ -48,6 +47,13 @@ public class UserPresenter implements ViewPresenter<UserView> {
 				view.to(map, UserBookListActivity.class);
 			}
 		});
+		
+		view.setLogoutButton(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				logout();
+			}
+		});
 	}
 	
 	private void setName() {
@@ -84,7 +90,7 @@ public class UserPresenter implements ViewPresenter<UserView> {
 	
 	@Override
 	public void logout() {
+		UserFactory.getInstance().logout();
 		view.logout();
-		view.to(MainActivity.class);
 	}
 }
