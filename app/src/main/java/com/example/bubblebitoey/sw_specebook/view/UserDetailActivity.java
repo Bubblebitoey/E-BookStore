@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
+import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.api.view.PassingActivity;
 import com.example.bubblebitoey.sw_specebook.presenter.UserPresenter;
 import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
@@ -24,6 +25,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	private TextView userText;
 	private TextView money;
 	private Button myBooks;
+	private Button logoutBtn;
 	
 	private AlertDialog alert;
 	
@@ -36,6 +38,7 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 		userText = (TextView) findViewById(R.id.name);
 		money = (TextView) findViewById(R.id.amount);
 		myBooks = (Button) findViewById(R.id.myBooks);
+		logoutBtn = (Button) findViewById(R.id.logout_btn);
 		
 		
 		presenter = (UserPresenter) new UserPresenter().setView(this);
@@ -61,6 +64,11 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	}
 	
 	@Override
+	public void setLogoutButton(View.OnClickListener listener) {
+		logoutBtn.setOnClickListener(listener);
+	}
+	
+	@Override
 	public void setOwnerBookListButton(View.OnClickListener listener) {
 		myBooks.setOnClickListener(listener);
 	}
@@ -82,12 +90,11 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	
 	@Override
 	public void login() {
-		// do nothing
 	}
 	
 	@Override
 	public void logout() {
-		// do nothing
+		to(MainActivity.class);
 	}
 	
 	@Override

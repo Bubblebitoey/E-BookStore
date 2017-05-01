@@ -11,6 +11,8 @@ public interface UserView extends View {
 	
 	void setMoneyText(String text);
 	
+	void setLogoutButton(android.view.View.OnClickListener listener);
+	
 	void setOwnerBookListButton(android.view.View.OnClickListener listener);
 	
 	void setImage(Bitmap bitmap);
