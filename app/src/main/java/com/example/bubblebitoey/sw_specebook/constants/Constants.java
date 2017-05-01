@@ -23,7 +23,7 @@ public class Constants {
 	
 	public static final List<String> developerName = Arrays.asList("Kamontat", "Soraya");
 	public static final List<Uri> developerFacebook = Arrays.asList(Uri.parse("https://www.facebook.com/kamontatc"), Uri.parse("https://www.facebook.com/soraya.sanna.1"));
-	public static final String version = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
+	public static final String version = BuildConfig.VERSION_NAME + "b" + BuildConfig.VERSION_CODE + "";
 	
 	private static URL getLink(String link) {
 		try {

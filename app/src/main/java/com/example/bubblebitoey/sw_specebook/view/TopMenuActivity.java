@@ -67,7 +67,7 @@ public abstract class TopMenuActivity<T extends View> extends AppCompatActivity 
 					((BookListPresenter) presenter).refresh();
 				}
 			case R.id.about:
-				new MaterialDialog.Builder(this).title(String.format("%s v%s", getResources().getString(R.string.about_title), Constants.version)).content("Develop by").items(Constants.developerName).itemsCallback(new MaterialDialog.ListCallback() {
+				new MaterialDialog.Builder(this).title(String.format("%s %s", getResources().getString(R.string.about_title), Constants.version)).content("Develop by").items(Constants.developerName).itemsCallback(new MaterialDialog.ListCallback() {
 					@Override
 					public void onSelection(MaterialDialog dialog, android.view.View itemView, int which, CharSequence text) {
 						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Constants.developerFacebook.get(which));
