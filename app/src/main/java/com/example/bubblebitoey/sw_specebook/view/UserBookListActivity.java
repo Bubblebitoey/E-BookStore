@@ -15,15 +15,4 @@ public class UserBookListActivity extends BookListActivity {
 		User user = (User) getIntent().getParcelableExtra("user");
 		super.onCreate(savedInstanceState);
 	}
-	
-	@Override
-	public void login() {
-		super.login();
-	}
-	
-	@Override
-	public void logout() {
-		super.logout();
-		to(MainActivity.class);
-	}
 }

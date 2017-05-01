@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bubblebitoey.sw_specebook.R;
-import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.api.view.PassingActivity;
 import com.example.bubblebitoey.sw_specebook.presenter.UserPresenter;
 import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
@@ -86,15 +85,6 @@ public class UserDetailActivity extends AppCompatActivity implements UserView {
 	@Override
 	public void to(Map<String, Parcelable> data, Class nextActivity) {
 		PassingActivity.newActivity(data, this, nextActivity);
-	}
-	
-	@Override
-	public void login() {
-	}
-	
-	@Override
-	public void logout() {
-		to(MainActivity.class);
 	}
 	
 	@Override

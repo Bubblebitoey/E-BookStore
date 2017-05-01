@@ -1,52 +1,44 @@
 package com.example.bubblebitoey.sw_specebook.view;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.*;
+import android.view.Menu;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.bubblebitoey.sw_specebook.R;
 import com.example.bubblebitoey.sw_specebook.adapter.GridAdapter;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
-import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.api.view.PassingActivity;
-import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.Book;
 import com.example.bubblebitoey.sw_specebook.model.Books;
-import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.presenter.BookListPresenter;
 import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 
 import java.util.*;
 import java.util.concurrent.Executors;
 
-import static com.example.bubblebitoey.sw_specebook.presenter.MainPresenter.CALL_USER_ACTIVITY;
-
 /**
  * @author kamontat
  * @version 1.0
  * @since Sat 29/Apr/2017 - 10:28 AM
  */
-public class BookListActivity extends AppCompatActivity implements BookListView {
+public class BookListActivity extends TopMenuActivity<BookListView> implements BookListView {
 	private GridView gridView;
 	private GridAdapter gridAdapter;
 	private ProgressBar progressBar;
 	private EditText searchBar;
 	private Menu menu;
 	private Spinner spinner;
-	
-	private BookListPresenter presenter;
 	private Books books;
 	private Operation.Type type;
 	
 	public BookListActivity(BookListPresenter presenter) {
-		this.presenter = presenter;
+		super(presenter);
 		books = new Books();
 	}
 	
@@ -62,56 +54,9 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 		searchBar = (EditText) findViewById(R.id.search_bar);
 		spinner = (Spinner) findViewById(R.id.spinner);
 		
-		presenter.setView(this);
+		getPresenter().setView(this);
 		
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN); // disable auto appear keyboard
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.topmenu, menu);
-		this.menu = menu;
-		UserFactory.getInstance().toggleView(this);
-		return true;
-	}
-	
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean b = super.onPrepareOptionsMenu(menu);
-		Log.d("UPDATE", "Option Menu");
-		UserFactory.getInstance().toggleView(this);
-		return b;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.login:
-				UserFactory.getInstance().createMockUser(); // TODO: 4/27/2017 AD change to non mock
-				presenter.login();
-				break;
-			case R.id.user:
-				toAndWait(CALL_USER_ACTIVITY, UserDetailActivity.class);
-				break;
-			case R.id.logout:
-				presenter.logout();
-				break;
-			case R.id.about:
-				new MaterialDialog.Builder(this).title(String.format("%s v%s", getResources().getString(R.string.about_title), Constants.version)).content("Develop by").items(Constants.developerName).itemsCallback(new MaterialDialog.ListCallback() {
-					@Override
-					public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Constants.developerFacebook.get(which));
-						startActivity(browserIntent);
-					}
-				}).positiveText(R.string.ok_message).canceledOnTouchOutside(true).show();
-				break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	public BookListPresenter getPresenter() {
-		return presenter;
 	}
 	
 	@Override
@@ -163,29 +108,6 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	}
 	
 	@Override
-	public void login() {
-		User u = UserFactory.getInstance().getUser();
-		if (u == null) logout();
-		else {
-			menu.findItem(R.id.login).setVisible(false);
-			menu.findItem(R.id.user).setVisible(true);
-			menu.findItem(R.id.user).setTitle(u.getName());
-			menu.findItem(R.id.logout).setVisible(true);
-		}
-	}
-	
-	@Override
-	public void logout() {
-		User u = UserFactory.getInstance().getUser();
-		if (u != null) login();
-		else {
-			menu.findItem(R.id.login).setVisible(true);
-			menu.findItem(R.id.user).setVisible(false);
-			menu.findItem(R.id.logout).setVisible(false);
-		}
-	}
-	
-	@Override
 	public void to(Map<String, Parcelable> data, Class nextActivity) {
 		PassingActivity.newActivity(data, this, nextActivity);
 	}
@@ -207,8 +129,7 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	
 	@Override
 	public void addNewBook(Book book) {
-		// FIXME: 4/29/2017 AD error duplicate books
-		// manualFilter();
+		manualFilter();
 		books.addNewBook(book);
 		setBook(book);
 	}
@@ -223,7 +144,7 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 				addNewBook(b);
 				updateProgress(0);
 			}
-			books.executeOnExecutor(Executors.newSingleThreadExecutor(), presenter);
+			books.executeOnExecutor(Executors.newSingleThreadExecutor(), (BookListPresenter) getPresenter());
 		}
 	}
 	
@@ -250,7 +171,7 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	
 	@Override
 	public synchronized void manualFilter() {
-		gridAdapter.filter(type, searchBar.getText().toString());
+		if (type != null) gridAdapter.filter(type, searchBar.getText().toString());
 	}
 	
 	@Override
@@ -291,6 +212,11 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 	@Override
 	public void setOnClickBook(AdapterView.OnItemClickListener listener) {
 		gridView.setOnItemClickListener(listener);
+	}
+	
+	@Override
+	public Context getContext() {
+		return this;
 	}
 	
 	@Override
