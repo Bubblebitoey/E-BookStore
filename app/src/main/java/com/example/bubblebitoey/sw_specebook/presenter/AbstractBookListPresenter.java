@@ -4,6 +4,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.bubblebitoey.sw_specebook.api.Operation;
 import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.Book;
@@ -18,16 +19,7 @@ import java.util.*;
  * @version 1.0
  * @since Sat 29/Apr/2017 - 12:45 PM
  */
-public abstract class AbstractBookListPresenter implements BookListPresenter {
-	
-	protected BookListView view;
-	
-	@Override
-	public ViewPresenter setView(BookListView view) {
-		this.view = view;
-		presenterSetting();
-		return this;
-	}
+public abstract class AbstractBookListPresenter extends AbstractViewPresenter<BookListView> implements BookListPresenter {
 	
 	@Override
 	public void presenterSetting() {
@@ -62,16 +54,6 @@ public abstract class AbstractBookListPresenter implements BookListPresenter {
 	public void addBook(Book b, int number) {
 		view.addNewBook(b);
 		view.updateProgress(number);
-	}
-	
-	@Override
-	public void login() {
-		view.login();
-	}
-	
-	@Override
-	public void logout() {
-		view.logout();
 	}
 	
 	@Override
@@ -116,7 +98,12 @@ public abstract class AbstractBookListPresenter implements BookListPresenter {
 	
 	@Override
 	public void refresh() {
-		clear();
-		fetchBook();
+		try {
+			clear();
+			fetchBook();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			new MaterialDialog.Builder(view.getContext()).title("Cannot start while loading old once").content("please wait, until the old books are downloaded and refresh them").positiveText("OK").show();
+		}
 	}
 }
