@@ -47,8 +47,10 @@ public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> 
 	@Override
 	public synchronized void add(Book object) {
 		super.add(object);
-		booksCurrent.addNewBook(object);
+		
+		// somehow this maybe add duplicate book, so my books add new book have to check contains
 		booksOriginal.addNewBook(object);
+		booksCurrent.addNewBook(object);
 	}
 	
 	@Override
@@ -67,6 +69,7 @@ public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> 
 		}
 		
 		Book item = booksCurrent.getBook(position);
+		
 		holder.title.setText(String.format(Locale.ENGLISH, "%s: %s (%s)\nprice: %.2f$", item.getId(), item.getTitle(), item.getYear(), item.getPrice()));
 		try {
 			holder.image.setImageBitmap(item.getImage());

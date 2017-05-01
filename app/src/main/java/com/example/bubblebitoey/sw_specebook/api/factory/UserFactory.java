@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import com.example.bubblebitoey.sw_specebook.model.mock.MockupUser;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
 import com.example.bubblebitoey.sw_specebook.model.real.RealUser;
+import com.example.bubblebitoey.sw_specebook.view.raw.View;
 
 /**
  * Created by kamontat on 4/27/2017 AD.
@@ -31,6 +32,11 @@ public class UserFactory {
 	@Nullable
 	public User getUser() {
 		return user;
+	}
+	
+	public void toggleView(View view) {
+		if (UserFactory.getInstance().getUser() != null) view.login();
+		else view.logout();
 	}
 	
 	public void logout() {
