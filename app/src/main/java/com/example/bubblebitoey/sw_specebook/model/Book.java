@@ -15,7 +15,7 @@ import java.util.*;
  * Created by bubblebitoey on 4/20/2017 AD.
  */
 
-public class Book implements Parcelable {
+public class Book implements Parcelable, Cloneable {
 	private String id;
 	private Bitmap image;
 	private String title;
@@ -100,8 +100,9 @@ public class Book implements Parcelable {
 		return image;
 	}
 	
-	public void setImage(Bitmap image) {
+	public Book setImage(Bitmap image) {
 		this.image = image;
+		return this;
 	}
 	
 	public String getYear() {
@@ -149,6 +150,11 @@ public class Book implements Parcelable {
 	@Override
 	public String toString() {
 		return "Book{" + "id='" + id + '\'' + ", image=" + image + ", title='" + title + '\'' + ", link=" + link + ", price=" + price + ", year='" + year + '\'' + '}';
+	}
+	
+	@Override
+	public Object clone() {
+		return new Book(id, title, link.toString(), price, year).setImage(image);
 	}
 	
 	@Override

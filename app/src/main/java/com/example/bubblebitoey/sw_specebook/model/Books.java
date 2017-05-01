@@ -44,7 +44,7 @@ public class Books extends AsyncTask<BookListPresenter, Void, Books> implements 
 	
 	@Override
 	public void addNewBook(Book book) {
-		books.add(book);
+		if (!books.contains(book)) books.add(book);
 	}
 	
 	@Override
