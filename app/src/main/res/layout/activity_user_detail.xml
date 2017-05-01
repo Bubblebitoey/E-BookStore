@@ -43,6 +43,13 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/logout_btn"
+                android:text="@string/logout"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
