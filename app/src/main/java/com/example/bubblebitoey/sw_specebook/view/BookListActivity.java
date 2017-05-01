@@ -80,13 +80,13 @@ public class BookListActivity extends AppCompatActivity implements BookListView 
 		switch (item.getItemId()) {
 			case R.id.login:
 				UserFactory.getInstance().createMockUser(); // TODO: 4/27/2017 AD change to non mock
-				login();
+				presenter.login();
 				break;
 			case R.id.user:
 				toAndWait(CALL_USER_ACTIVITY, UserDetailActivity.class);
 				break;
 			case R.id.logout:
-				logout();
+				presenter.logout();
 				break;
 			case R.id.about:
 				new MaterialDialog.Builder(this).title(String.format("%s v%s", getResources().getString(R.string.about_title), Constants.version)).content("Develop by").items(Constants.developerName).itemsCallback(new MaterialDialog.ListCallback() {
