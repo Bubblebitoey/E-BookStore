@@ -2,6 +2,7 @@ package com.example.bubblebitoey.sw_specebook.presenter;
 
 import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
+import com.example.bubblebitoey.sw_specebook.view.MainActivity;
 import com.example.bubblebitoey.sw_specebook.view.raw.BookListView;
 
 /**
@@ -30,8 +31,8 @@ public class UserBooksPresenter extends AbstractBookListPresenter {
 	
 	@Override
 	public void logout() {
-		UserFactory.getInstance().logout();
 		super.logout();
+		view.to(MainActivity.class);
 	}
 	
 	@Override
