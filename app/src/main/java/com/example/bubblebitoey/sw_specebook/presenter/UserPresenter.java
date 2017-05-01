@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.bubblebitoey.sw_specebook.api.factory.UserFactory;
 import com.example.bubblebitoey.sw_specebook.constants.Constants;
 import com.example.bubblebitoey.sw_specebook.model.raw.User;
+import com.example.bubblebitoey.sw_specebook.view.MainActivity;
 import com.example.bubblebitoey.sw_specebook.view.UserBookListActivity;
 import com.example.bubblebitoey.sw_specebook.view.raw.UserView;
 
@@ -16,9 +17,8 @@ import java.util.*;
 /**
  * Created by kamontat on 4/27/2017 AD.
  */
-public class UserPresenter implements ViewPresenter<UserView> {
+public class UserPresenter extends AbstractViewPresenter<UserView> {
 	private static final CharSequence[] c = new CharSequence[]{"10฿", "100฿", "500฿", "1000฿"};
-	private UserView view;
 	private User user;
 	
 	public UserPresenter() {
@@ -52,6 +52,7 @@ public class UserPresenter implements ViewPresenter<UserView> {
 			@Override
 			public void onClick(View view) {
 				logout();
+				UserPresenter.super.view.to(MainActivity.class);
 			}
 		});
 	}
@@ -69,13 +70,6 @@ public class UserPresenter implements ViewPresenter<UserView> {
 	}
 	
 	@Override
-	public ViewPresenter setView(UserView view) {
-		this.view = view;
-		presenterSetting();
-		return this;
-	}
-	
-	@Override
 	public void presenterSetting() {
 		setName();
 		setListener();
@@ -90,7 +84,6 @@ public class UserPresenter implements ViewPresenter<UserView> {
 	
 	@Override
 	public void logout() {
-		UserFactory.getInstance().logout();
-		view.logout();
+		super.logout();
 	}
 }
