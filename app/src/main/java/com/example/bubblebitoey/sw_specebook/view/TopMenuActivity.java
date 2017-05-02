@@ -63,9 +63,10 @@ public abstract class TopMenuActivity<T extends View> extends AppCompatActivity 
 				toggleMenu();
 				break;
 			case R.id.refresh:
-				if (presenter.getClass().equals(BookListPresenter.class)) {
+				if (presenter instanceof BookListPresenter) {
 					((BookListPresenter) presenter).refresh();
 				}
+				break;
 			case R.id.about:
 				new MaterialDialog.Builder(this).title(String.format("%s %s", getResources().getString(R.string.about_title), Constants.version)).content("Develop by").items(Constants.developerName).itemsCallback(new MaterialDialog.ListCallback() {
 					@Override

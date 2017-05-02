@@ -48,6 +48,7 @@ public class RealStore extends AsyncTask<Void, Void, Void> implements Store {
 	protected void onPostExecute(Void voids) {
 		presenter.sort(Operation.Type.Title);
 		presenter.endLoading();
+		
 	}
 	
 	@Override

@@ -29,7 +29,7 @@ public class GridAdapter extends ArrayAdapter<Book> implements Filterable<Void> 
 	private final Filter FILTER_BY_YEAR = new IFilter(Operation.Type.Year);
 	private final Filter FILTER_BY_PRICE = new IFilter(Operation.Type.Price);
 	
-	private static final String TAG = "Adapter";
+	// private static final String TAG = "Adapter";
 	private Books booksOriginal;
 	private Books booksCurrent;
 	private Context context;

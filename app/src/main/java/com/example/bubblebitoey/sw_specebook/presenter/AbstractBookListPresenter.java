@@ -102,8 +102,8 @@ public abstract class AbstractBookListPresenter extends AbstractViewPresenter<Bo
 			clear();
 			fetchBook();
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
-			new MaterialDialog.Builder(view.getContext()).title("Cannot start while loading old once").content("please wait, until the old books are downloaded and refresh them").positiveText("OK").show();
+			Log.e("ERROR", e.getMessage());
+			new MaterialDialog.Builder(view.getContext()).title("Cannot refresh").content("Due to this page is still loading").positiveText("OK").show();
 		}
 	}
 }

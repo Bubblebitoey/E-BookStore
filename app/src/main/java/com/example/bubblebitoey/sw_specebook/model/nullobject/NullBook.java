@@ -1,4 +1,6 @@
-package com.example.bubblebitoey.sw_specebook.model;
+package com.example.bubblebitoey.sw_specebook.model.nullobject;
+
+import com.example.bubblebitoey.sw_specebook.model.Book;
 
 import java.io.IOException;
 
