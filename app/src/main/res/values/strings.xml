@@ -8,7 +8,7 @@
     <string name="ok_message">OK</string>
     <string name="title_activity_user_detail">User</string>
     <string name="book_detail">Name</string>
-    <string name="book_list">Book List</string>
+    <string name="book_list">Order</string>
     <string name="user_image">user image</string>
     <string name="my_books">My Books</string>
     <string name="refresh">Refresh</string>
